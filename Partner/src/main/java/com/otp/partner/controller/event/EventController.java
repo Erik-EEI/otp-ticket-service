@@ -1,6 +1,6 @@
 package com.otp.partner.controller.event;
 
-import com.otp.partner.dto.ApiResponse;
+import com.otp.partner.dto.response.ApiResponse;
 import com.otp.partner.dto.EventDTO;
 import com.otp.partner.dto.EventSeatsDTO;
 import com.otp.partner.dto.SeatDTO;
@@ -45,6 +45,7 @@ public class EventController {
     @GetMapping("getEvent")
     public ResponseEntity<ApiResponse> getEventById(@RequestParam(required = true) Long eventId) {
         Event event = eventService.getEventById(eventId);
+
         List<Seat> seats = event.getSeats();
 
         EventSeatsDTO responseDTO = new EventSeatsDTO(
@@ -60,9 +61,6 @@ public class EventController {
                         .toList()
                 );
 
-        if (event == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(new ApiResponse(responseDTO,true), HttpStatus.OK);
     }
 }

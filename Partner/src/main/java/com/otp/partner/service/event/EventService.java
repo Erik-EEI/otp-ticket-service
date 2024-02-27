@@ -1,6 +1,7 @@
 package com.otp.partner.service.event;
 
 import com.otp.partner.entity.Event;
+import com.otp.partner.exception.EventNotFoundException;
 import com.otp.partner.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,6 @@ public class EventService {
 
     public Event getEventById(Long eventId) {
         return eventRepository.findById(eventId)
-                .orElseThrow(() -> new RuntimeException("Event not found with id: " + eventId));
+                .orElseThrow(EventNotFoundException::new);
     }
 }
