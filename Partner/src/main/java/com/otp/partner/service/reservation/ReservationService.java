@@ -3,7 +3,7 @@ package com.otp.partner.service.reservation;
 import com.otp.partner.entity.Event;
 import com.otp.partner.entity.Reservation;
 import com.otp.partner.entity.Seat;
-import com.otp.partner.exception.ReservationNotFound;
+import com.otp.partner.exception.ReservationNotFoundException;
 import com.otp.partner.exception.SeatAlreadyReservedException;
 import com.otp.partner.exception.SeatNotFoundException;
 import com.otp.partner.repository.ReservationRepository;
@@ -35,6 +35,7 @@ public class ReservationService {
                 .findFirst()
                 .orElseThrow(SeatNotFoundException::new);
 
+        if(seat == null) throw new SeatNotFoundException();
         if(seat.isReserved()) throw new SeatAlreadyReservedException();
 
         seatService.updateSeatReserved(seat.getId(),true);
@@ -50,7 +51,7 @@ public class ReservationService {
     public Reservation getReservationById(Long reservationId) {
 
         return reservationRepository.findById(reservationId)
-                .orElseThrow(ReservationNotFound::new);
+                .orElseThrow(ReservationNotFoundException::new);
     }
 
     public void cancelReservation(Long reservationId) {

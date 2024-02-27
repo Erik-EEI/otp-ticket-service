@@ -1,8 +1,8 @@
 package com.otp.partner.exception;
 
-public class ReservationNotFound extends RuntimeException{
+public class ReservationNotFoundException extends RuntimeException{
     private final int ERROR_CODE = 90005;
-    public ReservationNotFound() {
+    public ReservationNotFoundException() {
         super("Nem létezik ilyen foglalás!");
     }
 
