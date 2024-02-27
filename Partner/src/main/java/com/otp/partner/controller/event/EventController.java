@@ -25,7 +25,7 @@ public class EventController {
     }
 
     @GetMapping("getEvents")
-    public ResponseEntity<List<Event>> getEvents() {
+    public ResponseEntity<List<EventDTO>> getEvents() {
         List<Event> events = eventService.getAllEvents();
 
         List<EventDTO> eventDTOS = events
@@ -38,11 +38,11 @@ public class EventController {
                         event.getEndTimestamp()))
                 .toList();
 
-        return new ResponseEntity<>(events, HttpStatus.OK);
+        return new ResponseEntity<>(eventDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("getEvent/{eventId}")
-    public ResponseEntity<Event> getEventById(@RequestParam(required = true) Long eventId) {
+    @GetMapping("getEvent")
+    public ResponseEntity<EventSeatsDTO> getEventById(@RequestParam(required = true) Long eventId) {
         Event event = eventService.getEventById(eventId);
         List<Seat> seats = event.getSeats();
 
@@ -62,6 +62,6 @@ public class EventController {
         if (event == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(event, HttpStatus.OK);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }
