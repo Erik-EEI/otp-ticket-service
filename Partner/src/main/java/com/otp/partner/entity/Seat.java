@@ -1,11 +1,14 @@
 package com.otp.partner.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -20,8 +23,10 @@ public class Seat {
     private int price;
     private String currency;
     private boolean reserved;
-    
+
     @ManyToOne
-    @JoinColumn(name = "event_id")
+    @JoinColumn(name = "event_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Event event;
 }
