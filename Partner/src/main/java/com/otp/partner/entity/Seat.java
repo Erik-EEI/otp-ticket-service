@@ -27,6 +27,5 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "event_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Event event;
 }
