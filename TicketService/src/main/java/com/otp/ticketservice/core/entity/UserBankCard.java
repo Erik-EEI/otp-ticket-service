@@ -12,14 +12,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_bank_cards")
 public class UserBankCard {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cardId;
+    private String cardId;
 
     @OneToOne()
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-    private int cardNumber;
+    private Long cardNumber;
     private int cvc;
     private String name;
     private double amount;
