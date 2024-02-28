@@ -1,8 +1,11 @@
 package com.otp.ticketservice.api.controller;
 
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -12,5 +15,27 @@ public class ApiController {
 
     public ApiController(CoreServiceInterface coreService) {
         this.coreService = coreService;
+    }
+
+    @GetMapping("getEvents")
+    public ResponseEntity<PartnerResponseDTO> getEvents() {
+
+        return new ResponseEntity<>(new PartnerResponseDTO(), HttpStatus.OK);
+    }
+
+    @GetMapping("getEvent")
+    public ResponseEntity<PartnerResponseDTO> getEventById(@RequestParam(required = true) Long eventId) {
+
+        return new ResponseEntity<>(new PartnerResponseDTO(), HttpStatus.OK);
+    }
+
+    @PostMapping("pay")
+    public ResponseEntity<PartnerResponseDTO> getEventById(
+            @RequestParam(required = true) Long eventId,
+            @RequestParam(required = true) Long seatId,
+            @RequestParam(required = true) Long cardId
+    ) {
+
+        return new ResponseEntity<>(new PartnerResponseDTO(), HttpStatus.OK);
     }
 }
