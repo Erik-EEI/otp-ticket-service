@@ -3,20 +3,23 @@ package com.otp.ticketservice.api.controller;
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
+import com.otp.ticketservice.ticket.dto.EventResponseDTO;
+import com.otp.ticketservice.ticket.dto.PaymentResponseDTO;
+import com.otp.ticketservice.ticket.service.PaymentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/")
 public class ApiController {
 
     private final CoreServiceInterface coreService;
+    private final PaymentService paymentService; //TODO replace with interface dependency
 
-    public ApiController(CoreServiceInterface coreService) {
+    public ApiController(CoreServiceInterface coreService, PaymentService paymentService) {
         this.coreService = coreService;
+        this.paymentService = paymentService;
     }
 
     @GetMapping("getEvents")
@@ -24,6 +27,7 @@ public class ApiController {
             @RequestHeader(required = true) String userToken
     ) {
         coreService.validateUserToken(userToken);
+
 
         return new ResponseEntity<>(new EventResponseDTO(), HttpStatus.OK);
     }
@@ -49,6 +53,7 @@ public class ApiController {
         coreService.validateUserToken(userToken);
 
         PaymentDataDTO paymentData = new PaymentDataDTO(eventId,seatId,cardId);
+
 
 
         return new ResponseEntity<>(new PaymentResponseDTO(), HttpStatus.OK);
