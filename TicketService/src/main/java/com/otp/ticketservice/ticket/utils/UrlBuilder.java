@@ -1,5 +1,6 @@
 package com.otp.ticketservice.ticket.utils;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.experimental.UtilityClass;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -11,14 +12,14 @@ import java.util.Map;
 @UtilityClass
 public class UrlBuilder {
 
-    @Value("${api.base-url}")
-    private static String baseUrl;
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String baseUrl = dotenv.get("API_BASE_URL");
 
-    public String buildUrl(String endpoint) {
+    public static String buildUrl(String endpoint) {
         return baseUrl + endpoint;
     }
 
-    public String buildUrl(String endpoint, Map<String, String> queryParams) {
+    public static String buildUrl(String endpoint, Map<String, String> queryParams) {
         StringBuilder urlBuilder = new StringBuilder(baseUrl + endpoint);
 
         if (queryParams != null && !queryParams.isEmpty()) {
