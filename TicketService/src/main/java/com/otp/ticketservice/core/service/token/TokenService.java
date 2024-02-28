@@ -1,4 +1,4 @@
-package com.otp.ticketservice.core.service;
+package com.otp.ticketservice.core.service.token;
 
 import com.otp.ticketservice.core.entity.User;
 import com.otp.ticketservice.core.entity.UserToken;
