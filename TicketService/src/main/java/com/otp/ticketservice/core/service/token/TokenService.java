@@ -2,6 +2,7 @@ package com.otp.ticketservice.core.service.token;
 
 import com.otp.ticketservice.core.entity.User;
 import com.otp.ticketservice.core.entity.UserToken;
+import com.otp.ticketservice.core.exception.TokenNotFoundException;
 import com.otp.ticketservice.core.repository.UserTokenRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +16,14 @@ public class TokenService {
 
     public boolean validate( String token ){
         UserToken userToken = userTokenRepository.findUserTokenByToken(token)
-                .orElseThrow(RuntimeException::new); //TODO Replace with custom exception
+                .orElseThrow(TokenNotFoundException::new);
 
         return true;
     }
 
     public User getUserFromToken( String token ){
         UserToken userToken = userTokenRepository.findUserTokenByToken(token)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(RuntimeException::new); //TODO Handle exception
 
         return userToken.getUser();
     }

@@ -1,6 +1,7 @@
 package com.otp.ticketservice.core.service;
 
 import com.otp.ticketservice.core.entity.User;
+import com.otp.ticketservice.core.exception.CardNotMatchUserException;
 import com.otp.ticketservice.core.service.card.CardService;
 import com.otp.ticketservice.core.service.token.TokenService;
 import com.otp.ticketservice.core.service.user.UserService;
@@ -25,7 +26,8 @@ public class CoreService {
         User tokenOwner = tokenService.getUserFromToken( token );
         User cardOwner = cardService.getCardById( cardId ).getUser();
 
-        return tokenOwner.equals(cardOwner);
+        if(!tokenOwner.equals(cardOwner)) throw new CardNotMatchUserException();
+        return true;
     }
 
     public boolean checkIfAmountIsAvailable(Long cardId, double amount){
