@@ -2,6 +2,8 @@ package com.otp.ticketservice.core.service;
 
 import com.otp.ticketservice.core.entity.User;
 import com.otp.ticketservice.core.exception.CardNotMatchUserException;
+import com.otp.ticketservice.core.interfaces.CardServiceInterface;
+import com.otp.ticketservice.core.interfaces.TokenServiceInterface;
 import com.otp.ticketservice.core.service.card.CardService;
 import com.otp.ticketservice.core.service.token.TokenService;
 import com.otp.ticketservice.core.service.user.UserService;
@@ -9,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CoreService {
-    private final CardService cardService;
-    private final TokenService tokenService;
+    private final CardServiceInterface cardService;
+    private final TokenServiceInterface tokenService;
     // TODO Change dependency to Interfaces
 
     public CoreService(CardService cardService, TokenService tokenService) {
