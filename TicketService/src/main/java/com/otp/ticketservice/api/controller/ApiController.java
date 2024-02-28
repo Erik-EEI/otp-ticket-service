@@ -20,20 +20,27 @@ public class ApiController {
     }
 
     @GetMapping("getEvents")
-    public ResponseEntity<PartnerResponseDTO> getEvents() {
+    public ResponseEntity<EventResponseDTO> getEvents(
+            @RequestHeader(required = true) String userToken
+    ) {
+        coreService.validateUserToken(userToken);
 
-        return new ResponseEntity<>(new PartnerResponseDTO(), HttpStatus.OK);
+        return new ResponseEntity<>(new EventResponseDTO(), HttpStatus.OK);
     }
 
     @GetMapping("getEvent")
-    public ResponseEntity<PartnerResponseDTO> getEventById(@RequestParam(required = true) Long eventId) {
+    public ResponseEntity<EventResponseDTO> getEventById(
+            @RequestParam(required = true) Long eventId,
+            @RequestHeader(required = true) String userToken
+    ) {
+        coreService.validateUserToken(userToken);
         EventDataDTO eventData = new EventDataDTO(eventId);
-        
-        return new ResponseEntity<>(new PartnerResponseDTO(), HttpStatus.OK);
+
+        return new ResponseEntity<>(new EventResponseDTO(), HttpStatus.OK);
     }
 
     @PostMapping("pay")
-    public ResponseEntity<PartnerResponseDTO> getEventById(
+    public ResponseEntity<PaymentResponseDTO> getEventById(
             @RequestParam(required = true) Long eventId,
             @RequestParam(required = true) Long seatId,
             @RequestParam(required = true) Long cardId,
@@ -44,6 +51,6 @@ public class ApiController {
         PaymentDataDTO paymentData = new PaymentDataDTO(eventId,seatId,cardId);
 
 
-        return new ResponseEntity<>(new PartnerResponseDTO(), HttpStatus.OK);
+        return new ResponseEntity<>(new PaymentResponseDTO(), HttpStatus.OK);
     }
 }
