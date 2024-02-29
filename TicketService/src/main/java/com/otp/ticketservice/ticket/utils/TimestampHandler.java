@@ -18,6 +18,6 @@ public class TimestampHandler {
         LocalDateTime eventDate = LocalDateTime.parse(dateString,formatter);
         LocalDateTime currentDate = LocalDateTime.now();
 
-        if(currentDate.isAfter(eventDate)) throw new RuntimeException(""); //TODO Replace with custom exception
+        // if(currentDate.isAfter(eventDate)) throw new RuntimeException(""); //TODO Replace with custom exception
     }
 }

@@ -4,5 +4,5 @@ import com.otp.ticketservice.core.entity.UserBankCard;
 
 public interface CardServiceInterface {
     UserBankCard getCardById(String cardId);
-    boolean checkIfAmountIsAvailable(String cardId, double amount);
+    void checkIfAmountIsAvailable(String cardId, double amount);
 }

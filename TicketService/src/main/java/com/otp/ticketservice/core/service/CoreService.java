@@ -7,7 +7,6 @@ import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
 import com.otp.ticketservice.core.interfaces.TokenServiceInterface;
 import com.otp.ticketservice.core.service.card.CardService;
 import com.otp.ticketservice.core.service.token.TokenService;
-import com.otp.ticketservice.core.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,21 +20,20 @@ public class CoreService implements CoreServiceInterface {
     }
 
     @Override
-    public boolean validateUserToken( String token ){
-        return tokenService.validate( token );
+    public void validateUserToken(String token ){
+        tokenService.validate(token);
     }
 
     @Override
-    public boolean matchCardToUser( String cardId, String token ){
+    public void matchCardToUser(String cardId, String token ){
         User tokenOwner = tokenService.getUserFromToken( token );
         User cardOwner = cardService.getCardById( cardId ).getUser();
 
         if(!tokenOwner.equals(cardOwner)) throw new CardNotMatchUserException();
-        return true;
     }
 
     @Override
-    public boolean checkIfAmountIsAvailable(String cardId, double amount){
-        return cardService.checkIfAmountIsAvailable(cardId,amount);
+    public void checkIfAmountIsAvailable(String cardId, double amount){
+         cardService.checkIfAmountIsAvailable(cardId,amount);
     }
 }
