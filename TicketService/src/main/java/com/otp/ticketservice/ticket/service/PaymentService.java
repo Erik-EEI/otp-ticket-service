@@ -10,6 +10,7 @@ import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.mapper.PaymentMapper;
+import com.otp.ticketservice.ticket.utils.HttpResponseExceptionHandler;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
 import com.otp.ticketservice.ticket.utils.TimestampHandler;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class PaymentService {
         coreService.checkIfAmountIsAvailable(paymentData.cardID(), seat.getPrice());
 
         HttpResponse<String> response = ReservationDAO.makeReservation( paymentData );
+        HttpResponseExceptionHandler.checkForException( response );
+
         return PaymentMapper.mapToPaymentResponseDTO( response );
     }
 }

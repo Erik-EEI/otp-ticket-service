@@ -7,6 +7,7 @@ import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.mapper.EventMapper;
+import com.otp.ticketservice.ticket.utils.HttpResponseExceptionHandler;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
@@ -24,11 +25,15 @@ public class EventService implements EventServiceInterface {
     @Override
     public EventListDTO getAllEvents(){
         HttpResponse<String> response = eventDAO.getAllEvents();
+        HttpResponseExceptionHandler.checkForException( response );
+
         return EventMapper.mapToEventListDTO( response );
     }
     @Override
     public EventSeatsDTO getEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getEvent(eventData);
+        HttpResponseExceptionHandler.checkForException( response );
+
         return EventMapper.mapToEventSeatsDTO( response );
     }
 
