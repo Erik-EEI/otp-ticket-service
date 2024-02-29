@@ -10,6 +10,8 @@ import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.service.EventService;
 import com.otp.ticketservice.ticket.service.PaymentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ public class ApiController {
     private final CoreServiceInterface coreService;
     private final PaymentService paymentService; //TODO replace with interface dependency
     private final EventServiceInterface eventService;
+    private final Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
 
     public ApiController(CoreServiceInterface coreService, PaymentService paymentService, EventService eventService) {
         this.coreService = coreService;
@@ -32,6 +35,7 @@ public class ApiController {
     public ResponseEntity<EventListDTO> getEvents(
             @RequestHeader(required = true) String userToken
     ) {
+        LOGGER.info("REQUEST for /getEvents");
         coreService.validateUserToken(userToken);
 
         EventListDTO events = eventService.getAllEvents();
@@ -44,6 +48,7 @@ public class ApiController {
             @RequestParam(required = true) Long eventId,
             @RequestHeader(required = true) String userToken
     ) {
+        LOGGER.info("REQUEST for /getEvent");
         coreService.validateUserToken(userToken);
 
         EventDataDTO eventData = new EventDataDTO(eventId);
@@ -58,6 +63,7 @@ public class ApiController {
             @RequestBody(required = true) PaymentRequestDTO paymentRequest,
             @RequestHeader(required = true) String userToken
     ) {
+        LOGGER.info("REQUEST for /pay");
         coreService.validateUserToken(userToken);
 
         PaymentDataDTO paymentData = new PaymentDataDTO(

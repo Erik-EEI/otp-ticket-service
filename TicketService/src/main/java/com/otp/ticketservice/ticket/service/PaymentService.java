@@ -10,16 +10,11 @@ import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.mapper.PaymentMapper;
-import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
 import com.otp.ticketservice.ticket.utils.TimestampHandler;
-import com.otp.ticketservice.ticket.utils.UrlBuilder;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
-import java.sql.Time;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class PaymentService {
