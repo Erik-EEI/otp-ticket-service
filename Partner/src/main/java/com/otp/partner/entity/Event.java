@@ -1,5 +1,6 @@
 package com.otp.partner.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Event {
     private String endTimestamp;
 
     @OneToMany(mappedBy = "event")
+    @JsonIgnore
     private List<Seat> seats;
 }

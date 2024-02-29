@@ -1,11 +1,13 @@
 package com.otp.partner.controller.event;
 
+import com.otp.partner.dto.DetailedEventDTO;
 import com.otp.partner.dto.response.ApiResponse;
 import com.otp.partner.dto.EventDTO;
 import com.otp.partner.dto.EventSeatsDTO;
 import com.otp.partner.dto.SeatDTO;
 import com.otp.partner.entity.Event;
 import com.otp.partner.entity.Seat;
+import com.otp.partner.mapper.EventMapper;
 import com.otp.partner.service.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,37 +33,25 @@ public class EventController {
     public ResponseEntity<ApiResponse> getEvents() {
         List<Event> events = eventService.getAllEvents();
 
-        List<EventDTO> eventDTOS = events
-                .stream()
-                .map((event) -> new EventDTO(
-                        event.getId(),
-                        event.getTitle(),
-                        event.getLocation(),
-                        event.getStartTimestamp(),
-                        event.getEndTimestamp()))
-                .toList();
+        List<EventDTO> eventDTOS = EventMapper.mapToEventDTOList( events );
 
         return new ResponseEntity<>(new ApiResponse(eventDTOS,true), HttpStatus.OK);
     }
 
     @GetMapping("getEvent")
-    public ResponseEntity<ApiResponse> getEventById(@RequestParam(required = true) Long eventId) {
+    public ResponseEntity<ApiResponse> getEventById(
+            @RequestParam(required = true) Long eventId,
+            @RequestParam(defaultValue = "false") boolean detailed
+    ) {
         Event event = eventService.getEventById(eventId);
 
-        List<Seat> seats = event.getSeats();
+        if(detailed){
+            DetailedEventDTO detailedEvent = EventMapper.mapToDetailedEventDTO( event );
 
-        EventSeatsDTO responseDTO = new EventSeatsDTO(
-                event.getId(),
-                seats.stream()
-                        .map(seat -> new SeatDTO(
-                                seat.getId(),
-                                seat.getSeatName(),
-                                seat.getPrice(),
-                                seat.getCurrency(),
-                                seat.isReserved()
-                        ))
-                        .toList()
-                );
+            return new ResponseEntity<>(new ApiResponse(detailedEvent,true), HttpStatus.OK);
+        }
+        
+        EventSeatsDTO responseDTO = EventMapper.mapToEventSeatsDTO( event );
 
         return new ResponseEntity<>(new ApiResponse(responseDTO,true), HttpStatus.OK);
     }

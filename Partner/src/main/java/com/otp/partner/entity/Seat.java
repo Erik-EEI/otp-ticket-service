@@ -24,7 +24,7 @@ public class Seat {
     private String currency;
     private boolean reserved;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Event event;
