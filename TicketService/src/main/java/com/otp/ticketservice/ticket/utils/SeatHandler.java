@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SeatHandler {
 
-    public SeatDTO getSeat(EventWithSeatsResponseDTO event, Long seatId){
+    public static SeatDTO getSeat(EventWithSeatsResponseDTO event, Long seatId){
         return event
                 .getData()
                 .getSeats()
@@ -17,7 +17,7 @@ public class SeatHandler {
                 .orElseThrow(RuntimeException::new); //TODO Replace with custom exception
     }
 
-    public void validateIfSeatIsReservable( SeatDTO seat ){
-        if (!seat.isReserved()) throw new RuntimeException(); //TODO Replace with custom exception
+    public static void validateIfSeatIsReservable( SeatDTO seat ){
+        if (seat.isReserved()) throw new RuntimeException(); //TODO Replace with custom exception
     }
 }
