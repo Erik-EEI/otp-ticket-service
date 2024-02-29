@@ -2,6 +2,7 @@ package com.otp.ticketservice.ticket.service;
 
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.ticket.dao.EventDAO;
+import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
@@ -38,15 +39,11 @@ public class EventService implements EventServiceInterface {
     }
 
     @Override
-    public EventDTO getEventDetails(Long eventId){
-        EventListDTO events = this.getAllEvents();
+    public DetailedEventDTO getDetailedEvent(EventDataDTO eventData){
+        HttpResponse<String> response = eventDAO.getDetailedEvent(eventData);
+        HttpResponseExceptionHandler.checkForException( response );
 
-        return events
-                .getData()
-                .stream()
-                .filter(event-> Objects.equals(event.getEventId(), eventId))
-                .findFirst()
-                .orElseThrow(RuntimeException::new); //TODO handle exception
+        return EventMapper.mapToDetailedEventDTO(response);
     }
 }
 

@@ -1,7 +1,7 @@
 package com.otp.ticketservice.ticket.dto.payment;
 
 public record PaymentResponseDTO(
-        Long data,
+        Long reservationId,
         boolean success
 ) {
 }

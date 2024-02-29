@@ -50,7 +50,7 @@ public class EventController {
 
             return new ResponseEntity<>(new ApiResponse(detailedEvent,true), HttpStatus.OK);
         }
-        
+
         EventSeatsDTO responseDTO = EventMapper.mapToEventSeatsDTO( event );
 
         return new ResponseEntity<>(new ApiResponse(responseDTO,true), HttpStatus.OK);

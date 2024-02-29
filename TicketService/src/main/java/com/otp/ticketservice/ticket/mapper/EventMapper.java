@@ -1,6 +1,10 @@
 package com.otp.ticketservice.ticket.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.otp.ticketservice.api.dto.EventDataDTO;
+import com.otp.ticketservice.api.dto.PaymentDataDTO;
+import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventDTO;
+import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventWrapperDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsWrapperDTO;
@@ -27,5 +31,18 @@ public class EventMapper {
         } catch (Exception e){
             throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
         }
+    }
+
+    public static DetailedEventDTO mapToDetailedEventDTO( HttpResponse<String> response ){
+        try{
+            DetailedEventWrapperDTO wrapperDTO = objectMapper.readValue(response.body(),DetailedEventWrapperDTO.class);
+            return wrapperDTO.data();
+        } catch (Exception e){
+            throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
+        }
+    }
+
+    public static EventDataDTO mapToEventDataDTO(PaymentDataDTO paymentDataDTO){
+        return new EventDataDTO(paymentDataDTO.eventId() );
     }
 }

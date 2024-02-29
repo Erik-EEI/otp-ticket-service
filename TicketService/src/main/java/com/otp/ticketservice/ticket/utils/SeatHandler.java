@@ -6,12 +6,13 @@ import com.otp.ticketservice.ticket.exceptions.CanNotReserveOccupiedSeatExceptio
 import com.otp.ticketservice.ticket.exceptions.SeatDoesNotExistException;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+
 @UtilityClass
 public class SeatHandler {
 
-    public static SeatDTO getSeat(EventSeatsDTO event, Long seatId){
-        return event
-                .getSeats()
+    public static SeatDTO getSeat(List<SeatDTO> seatList, Long seatId){
+        return seatList
                 .stream()
                 .filter(seatDTO-> seatDTO.getId() == seatId)
                 .findFirst()

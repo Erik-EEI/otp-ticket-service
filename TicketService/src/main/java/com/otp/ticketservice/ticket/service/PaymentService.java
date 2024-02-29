@@ -4,11 +4,13 @@ import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
 import com.otp.ticketservice.ticket.dao.ReservationDAO;
+import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
+import com.otp.ticketservice.ticket.mapper.EventMapper;
 import com.otp.ticketservice.ticket.mapper.PaymentMapper;
 import com.otp.ticketservice.ticket.utils.HttpResponseExceptionHandler;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
@@ -28,11 +30,11 @@ public class PaymentService {
     }
 
     public PaymentResponseDTO payForReservation(PaymentDataDTO paymentData){
-        EventSeatsDTO eventSeats = eventService.getEvent(new EventDataDTO(paymentData.eventId()));
-        EventDTO eventDetails = eventService.getEventDetails(paymentData.eventId());
-        SeatDTO seat = SeatHandler.getSeat(eventSeats, paymentData.seatId());
+        EventDataDTO eventDataDTO = EventMapper.mapToEventDataDTO( paymentData );
+        DetailedEventDTO detailedEvent = eventService.getDetailedEvent(eventDataDTO);
+        SeatDTO seat = SeatHandler.getSeat(detailedEvent.seats(), paymentData.seatId());
 
-        TimestampHandler.checkStartTime(eventDetails.getStartTimeStamp());
+        TimestampHandler.checkStartTime(detailedEvent.startTimeStamp());
         SeatHandler.validateIfSeatIsReservable(seat);
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
         coreService.checkIfAmountIsAvailable(paymentData.cardID(), seat.getPrice());

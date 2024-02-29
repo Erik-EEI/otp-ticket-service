@@ -26,4 +26,15 @@ public class EventDAO {
         return HttpRequestUtil.getRequest(url);
     }
 
+    public HttpResponse<String> getDetailedEvent(EventDataDTO eventData){
+        Map<String,String> params = new HashMap<>();
+        params.put("eventId",eventData.eventId().toString());
+        params.put("detailed","true");
+
+        String url = UrlBuilder.buildUrl("getEvent",params);
+
+        return HttpRequestUtil.getRequest(url);
+
+    }
+
 }
