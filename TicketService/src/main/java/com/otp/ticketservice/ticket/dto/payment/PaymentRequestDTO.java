@@ -1,4 +1,4 @@
-package com.otp.ticketservice.ticket.dto;
+package com.otp.ticketservice.ticket.dto.payment;
 
 public record PaymentRequestDTO (
         Long eventId,

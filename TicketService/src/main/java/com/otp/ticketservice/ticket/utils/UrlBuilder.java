@@ -11,14 +11,13 @@ import java.util.Map;
 
 @UtilityClass
 public class UrlBuilder {
-
     private static final Dotenv dotenv = Dotenv.load();
     private static final String baseUrl = dotenv.get("API_BASE_URL");
+
 
     public static String buildUrl(String endpoint) {
         return baseUrl + endpoint;
     }
-
     public static String buildUrl(String endpoint, Map<String, String> queryParams) {
         StringBuilder urlBuilder = new StringBuilder(baseUrl + endpoint);
 
