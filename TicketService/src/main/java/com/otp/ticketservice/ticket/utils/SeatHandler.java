@@ -2,6 +2,8 @@ package com.otp.ticketservice.ticket.utils;
 
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
+import com.otp.ticketservice.ticket.exceptions.CanNotReserveOccupiedSeatException;
+import com.otp.ticketservice.ticket.exceptions.SeatDoesNotExistException;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -13,10 +15,10 @@ public class SeatHandler {
                 .stream()
                 .filter(seatDTO-> seatDTO.getId() == seatId)
                 .findFirst()
-                .orElseThrow(RuntimeException::new); //TODO Replace with custom exception
+                .orElseThrow(SeatDoesNotExistException::new);
     }
 
     public static void validateIfSeatIsReservable( SeatDTO seat ){
-        if (seat.isReserved()) throw new RuntimeException(); //TODO Replace with custom exception
+        if (seat.isReserved()) throw new CanNotReserveOccupiedSeatException();
     }
 }

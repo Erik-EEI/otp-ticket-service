@@ -1,8 +1,8 @@
 package com.otp.ticketservice.ticket.exceptions;
 
-public class CanNotReserveSetForEventInPastException extends RuntimeException {
+public class CanNotReserveSeatForEventInPastException extends RuntimeException {
     private final int ERROR_CODE = 20011;
-    public CanNotReserveSetForEventInPastException() {
+    public CanNotReserveSeatForEventInPastException() {
         super("Olyan eseményre ami már elkezdődött nem lehet jegyet eladni!");
     }
 
