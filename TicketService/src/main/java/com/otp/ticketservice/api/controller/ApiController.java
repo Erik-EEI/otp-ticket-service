@@ -44,7 +44,7 @@ public class ApiController {
             @RequestHeader(required = true) String userToken
     ) {
         coreService.validateUserToken(userToken);
-        
+
         EventDataDTO eventData = new EventDataDTO(eventId);
 
         EventWithSeatsResponseDTO eventWithSeats = eventService.getEvent(eventData);
@@ -61,7 +61,7 @@ public class ApiController {
     ) {
         coreService.validateUserToken(userToken);
 
-        PaymentDataDTO paymentData = new PaymentDataDTO(eventId,seatId,cardId);
+        PaymentDataDTO paymentData = new PaymentDataDTO(eventId,seatId,cardId,userToken);
 
 
 
