@@ -9,6 +9,7 @@ import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.mapper.EventMapper;
 import com.otp.ticketservice.ticket.utils.HttpResponseExceptionHandler;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
@@ -24,6 +25,7 @@ public class EventService implements EventServiceInterface {
     }
 
     @Override
+    @Cacheable("all_events")
     public EventListDTO getAllEvents(){
         HttpResponse<String> response = eventDAO.getAllEvents();
         HttpResponseExceptionHandler.checkForException( response );

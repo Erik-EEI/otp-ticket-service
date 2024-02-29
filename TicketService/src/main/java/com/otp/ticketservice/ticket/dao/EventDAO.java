@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Repository
 public class EventDAO {
-    @Cacheable("events")
+
     public HttpResponse<String> getAllEvents(){
         String url = UrlBuilder.buildUrl("getEvents");
 

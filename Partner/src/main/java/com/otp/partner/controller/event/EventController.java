@@ -9,6 +9,8 @@ import com.otp.partner.entity.Event;
 import com.otp.partner.entity.Seat;
 import com.otp.partner.mapper.EventMapper;
 import com.otp.partner.service.event.EventService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+    private final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
 
     @Autowired
     public EventController(EventService eventService) {
@@ -31,6 +34,7 @@ public class EventController {
 
     @GetMapping("getEvents")
     public ResponseEntity<ApiResponse> getEvents() {
+        LOGGER.info("GET REQUEST at /getEvents endpoint");
         List<Event> events = eventService.getAllEvents();
 
         List<EventDTO> eventDTOS = EventMapper.mapToEventDTOList( events );
@@ -43,6 +47,7 @@ public class EventController {
             @RequestParam(required = true) Long eventId,
             @RequestParam(defaultValue = "false") boolean detailed
     ) {
+        LOGGER.info("GET REQUEST at /getEvent endpoint");
         Event event = eventService.getEventById(eventId);
 
         if(detailed){
