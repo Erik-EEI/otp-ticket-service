@@ -67,8 +67,6 @@ public class ApiController {
                 userToken
         );
 
-        System.out.println(paymentRequest);
-
         PaymentResponseDTO result = paymentService.payForReservation(paymentData);
 
         return new ResponseEntity<>(result, HttpStatus.OK);

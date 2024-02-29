@@ -28,13 +28,9 @@ public class ReservationService {
 
     public Long createReservation(long eventId, long seatId) {
         Event event = eventService.getEventById(eventId);
+        Seat seat = seatService.findSeatById(seatId);
 
-        Seat seat = event.getSeats() //TODO Integrate seat repository
-                .stream()
-                .filter( currentSeat -> currentSeat.getId() == seatId )
-                .findFirst()
-                .orElseThrow(SeatNotFoundException::new);
-
+        if(!seat.getEvent().equals(event)) throw new SeatNotFoundException();
         if(seat.isReserved()) throw new SeatAlreadyReservedException();
 
         seatService.updateSeatReserved(seat.getId(),true);

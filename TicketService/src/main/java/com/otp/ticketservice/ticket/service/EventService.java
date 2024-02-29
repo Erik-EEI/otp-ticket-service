@@ -1,6 +1,7 @@
 package com.otp.ticketservice.ticket.service;
 
 import com.otp.ticketservice.api.dto.EventDataDTO;
+import com.otp.ticketservice.ticket.dao.EventDAO;
 import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventListResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
@@ -14,32 +15,25 @@ import java.util.Map;
 
 @Service
 public class EventService implements EventServiceInterface {
+
+    private final EventDAO eventDAO;
+
+    public EventService(EventDAO eventDAO) {
+        this.eventDAO = eventDAO;
+    }
+
     @Override
     public EventListResponseDTO getAllEvents(){
-        String url = UrlBuilder.buildUrl("getEvents");
-
-        return HttpRequestUtil.getRequest(url, EventListResponseDTO.class);
+        return eventDAO.getAllEvents();
     }
     @Override
     public EventWithSeatsResponseDTO getEvent(EventDataDTO eventData){
-        Map<String,String> params = new HashMap<>();
-        params.put("eventId",eventData.eventId().toString());
-
-        String url = UrlBuilder.buildUrl("getEvent",params);
-
-        return HttpRequestUtil.getRequest(url,EventWithSeatsResponseDTO.class);
+        return eventDAO.getEvent(eventData);
     }
 
     @Override
     public EventDTO getEventDetails(Long eventId){
-        EventListResponseDTO allEvents = this.getAllEvents();
-
-        return getAllEvents()
-                .getData()
-                .stream()
-                .filter(event->event.getEventId() == eventId)
-                .findFirst()
-                .orElseThrow(RuntimeException::new); // TODO Replace exception & review logic
+        return eventDAO.getEventDetails(eventId);
     }
 }
 
