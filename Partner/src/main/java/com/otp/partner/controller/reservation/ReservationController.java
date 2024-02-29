@@ -5,6 +5,7 @@ import com.otp.partner.dto.request.ReservationRequestDTO;
 import com.otp.partner.dto.response.ApiReservationResponse;
 import com.otp.partner.dto.response.ApiResponse;
 import com.otp.partner.entity.Reservation;
+import com.otp.partner.mapper.ReservationMapper;
 import com.otp.partner.service.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,12 +35,7 @@ public class ReservationController {
     @GetMapping("/reservation")
     public ResponseEntity<ApiResponse> getReservationById(@RequestParam Long reservationId) {
         Reservation reservation = reservationService.getReservationById(reservationId);
-
-        ReservationDTO reservationDTO = new ReservationDTO();
-        reservationDTO.setId(reservation.getId());
-        reservationDTO.setSeatId(reservation.getSeat().getId());
-        reservationDTO.setEventId(reservation.getEvent().getId());
-        reservationDTO.setCreatedAt(reservation.getCreatedAt());
+        ReservationDTO reservationDTO = ReservationMapper.mapToReservationDTO( reservation );
 
         return new ResponseEntity<>(new ApiResponse(reservationDTO, true), HttpStatus.OK);
     }
