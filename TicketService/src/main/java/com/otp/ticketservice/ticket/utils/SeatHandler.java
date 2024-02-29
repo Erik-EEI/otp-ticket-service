@@ -1,15 +1,14 @@
 package com.otp.ticketservice.ticket.utils;
 
-import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
+import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class SeatHandler {
 
-    public static SeatDTO getSeat(EventWithSeatsResponseDTO event, Long seatId){
+    public static SeatDTO getSeat(EventSeatsDTO event, Long seatId){
         return event
-                .getData()
                 .getSeats()
                 .stream()
                 .filter(seatDTO-> seatDTO.getId() == seatId)

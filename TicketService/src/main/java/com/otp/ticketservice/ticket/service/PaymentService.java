@@ -3,17 +3,20 @@ package com.otp.ticketservice.ticket.service;
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
+import com.otp.ticketservice.ticket.dao.ReservationDAO;
 import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
-import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
+import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
+import com.otp.ticketservice.ticket.mapper.PaymentMapper;
 import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
 import com.otp.ticketservice.ticket.utils.TimestampHandler;
 import com.otp.ticketservice.ticket.utils.UrlBuilder;
 import org.springframework.stereotype.Service;
 
+import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +32,7 @@ public class PaymentService {
     }
 
     public PaymentResponseDTO payForReservation(PaymentDataDTO paymentData){
-        EventWithSeatsResponseDTO eventSeats = eventService.getEvent(new EventDataDTO(paymentData.eventId()));
+        EventSeatsDTO eventSeats = eventService.getEvent(new EventDataDTO(paymentData.eventId()));
         EventDTO eventDetails = eventService.getEventDetails(paymentData.eventId());
         SeatDTO seat = SeatHandler.getSeat(eventSeats, paymentData.seatId());
 
@@ -38,12 +41,8 @@ public class PaymentService {
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
         coreService.checkIfAmountIsAvailable(paymentData.cardID(), seat.getPrice());
 
-        Map<String,String> queryParams = new HashMap<>();
-        queryParams.put("eventId", String.valueOf(paymentData.eventId()));
-        queryParams.put("seatId", String.valueOf(paymentData.seatId()));
-
-        String url = UrlBuilder.buildUrl("reserve");
-
-        return HttpRequestUtil.postRequest(url,queryParams,PaymentResponseDTO.class);
+        HttpResponse<String> response = ReservationDAO.makeReservation( paymentData );
+        return PaymentMapper.mapToPaymentResponseDTO( response );
     }
 }
+

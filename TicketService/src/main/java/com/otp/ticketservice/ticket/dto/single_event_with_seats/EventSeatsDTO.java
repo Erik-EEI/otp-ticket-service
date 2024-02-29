@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class EventDataWithSeatsDTO {
+public class EventSeatsDTO {
     private long eventId;
     private List<SeatDTO> seats;
 }

@@ -15,7 +15,7 @@ public class HttpRequestUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final HttpClient httpClient = HttpClient.newHttpClient();
 
-    public <T> T getRequest(String targetURL, Class<T> responseType) {
+    public HttpResponse<String> getRequest(String targetURL) {
         try {
             HttpRequest request = HttpRequest.newBuilder(
                             URI.create(targetURL))
@@ -25,14 +25,14 @@ public class HttpRequestUtil {
                     .GET()
                     .build();
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            return objectMapper.readValue(response.body(), responseType);
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
         } catch (Exception e) {
             throw new RuntimeException("Error sending HTTP request", e);
         }
     }
 
-    public <T> T postRequest(String targetURL, Map<String, String> requestBody, Class<T> responseType) {
+    public HttpResponse<String> postRequest(String targetURL, Map<String, String> requestBody) {
         try {
             String requestBodyJson = objectMapper.writeValueAsString(requestBody);
 
@@ -44,10 +44,10 @@ public class HttpRequestUtil {
                     .POST(HttpRequest.BodyPublishers.ofString(requestBodyJson))
                     .build();
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            return objectMapper.readValue(response.body(), responseType);
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
         } catch (Exception e) {
-            throw new RuntimeException("Error sending HTTP POST request", e);
+            throw new RuntimeException("Error sending HTTP POST request", e);// TODO Implement custom exception
         }
     }
 }

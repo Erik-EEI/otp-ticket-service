@@ -3,15 +3,14 @@ package com.otp.ticketservice.ticket.service;
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.ticket.dao.EventDAO;
 import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
-import com.otp.ticketservice.ticket.dto.event_list.EventListResponseDTO;
-import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
+import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
+import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
-import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
-import com.otp.ticketservice.ticket.utils.UrlBuilder;
+import com.otp.ticketservice.ticket.mapper.EventMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.net.http.HttpResponse;
+import java.util.Objects;
 
 @Service
 public class EventService implements EventServiceInterface {
@@ -23,17 +22,26 @@ public class EventService implements EventServiceInterface {
     }
 
     @Override
-    public EventListResponseDTO getAllEvents(){
-        return eventDAO.getAllEvents();
+    public EventListDTO getAllEvents(){
+        HttpResponse<String> response = eventDAO.getAllEvents();
+        return EventMapper.mapToEventListDTO( response );
     }
     @Override
-    public EventWithSeatsResponseDTO getEvent(EventDataDTO eventData){
-        return eventDAO.getEvent(eventData);
+    public EventSeatsDTO getEvent(EventDataDTO eventData){
+        HttpResponse<String> response = eventDAO.getEvent(eventData);
+        return EventMapper.mapToEventSeatsDTO( response );
     }
 
     @Override
     public EventDTO getEventDetails(Long eventId){
-        return eventDAO.getEventDetails(eventId);
+        EventListDTO events = this.getAllEvents();
+
+        return events
+                .getData()
+                .stream()
+                .filter(event-> Objects.equals(event.getEventId(), eventId))
+                .findFirst()
+                .orElseThrow(RuntimeException::new); //TODO handle exception
     }
 }
 

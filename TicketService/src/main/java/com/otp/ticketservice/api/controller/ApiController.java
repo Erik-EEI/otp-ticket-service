@@ -4,8 +4,8 @@ import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
 import com.otp.ticketservice.ticket.dto.payment.PaymentRequestDTO;
-import com.otp.ticketservice.ticket.dto.event_list.EventListResponseDTO;
-import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
+import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
+import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.service.EventService;
@@ -29,18 +29,18 @@ public class ApiController {
     }
 
     @GetMapping("getEvents")
-    public ResponseEntity<EventListResponseDTO> getEvents(
+    public ResponseEntity<EventListDTO> getEvents(
             @RequestHeader(required = true) String userToken
     ) {
         coreService.validateUserToken(userToken);
 
-        EventListResponseDTO events = eventService.getAllEvents();
+        EventListDTO events = eventService.getAllEvents();
 
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @GetMapping("getEvent")
-    public ResponseEntity<EventWithSeatsResponseDTO> getEventById(
+    public ResponseEntity<EventSeatsDTO> getEventById(
             @RequestParam(required = true) Long eventId,
             @RequestHeader(required = true) String userToken
     ) {
@@ -48,7 +48,7 @@ public class ApiController {
 
         EventDataDTO eventData = new EventDataDTO(eventId);
 
-        EventWithSeatsResponseDTO eventWithSeats = eventService.getEvent(eventData);
+        EventSeatsDTO eventWithSeats = eventService.getEvent(eventData);
 
         return new ResponseEntity<>(eventWithSeats, HttpStatus.OK);
     }
