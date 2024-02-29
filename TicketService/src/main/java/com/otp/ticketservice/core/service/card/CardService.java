@@ -15,14 +15,14 @@ public class CardService implements CardServiceInterface {
     }
 
     @Override
-    public UserBankCard getCardById(Long cardId){
-        return userBankCardRepository.findById(cardId)
+    public UserBankCard getCardById(String cardId){
+        return userBankCardRepository.findUserBankCardByCardId(cardId)
                 .orElseThrow(RuntimeException::new); // TODO Replace with custom exception
     }
 
     @Override
-    public boolean checkIfAmountIsAvailable(Long cardId, double amount){
-        UserBankCard card = userBankCardRepository.findById(cardId)
+    public boolean checkIfAmountIsAvailable(String cardId, double amount){
+        UserBankCard card = userBankCardRepository.findUserBankCardByCardId(cardId)
                 .orElseThrow(NotEnoughAmountOnCardException::new);
 
         return card.getAmount() >= amount;

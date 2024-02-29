@@ -8,7 +8,12 @@ import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventDataWithSea
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
+import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
+import com.otp.ticketservice.ticket.utils.UrlBuilder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class PaymentService {
@@ -33,6 +38,12 @@ public class PaymentService {
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
         coreService.checkIfAmountIsAvailable(paymentData.cardID(), seat.getPrice());
 
-        return new PaymentResponseDTO(); // TODO For testing
+        Map<String,String> queryParams = new HashMap<>();
+        queryParams.put("eventId", String.valueOf(paymentData.eventId()));
+        queryParams.put("seatId", String.valueOf(paymentData.seatId()));
+
+        String url = UrlBuilder.buildUrl("reserve");
+
+        return HttpRequestUtil.postRequest(url,queryParams,PaymentResponseDTO.class);
     }
 }

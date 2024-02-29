@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface UserBankCardRepository extends JpaRepository<UserBankCard,Long> {
     Optional<UserBankCard> findUserBankCardByUserId(Long userId);
+    Optional<UserBankCard> findUserBankCardByCardId(String cardId);
 }

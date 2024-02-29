@@ -3,6 +3,7 @@ package com.otp.ticketservice.api.controller;
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
+import com.otp.ticketservice.ticket.dto.PaymentRequestDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventListResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
 import com.otp.ticketservice.ticket.dto.PaymentResponseDTO;
@@ -54,17 +55,22 @@ public class ApiController {
 
     @PostMapping("pay")
     public ResponseEntity<PaymentResponseDTO> getEventById(
-            @RequestParam(required = true) Long eventId,
-            @RequestParam(required = true) Long seatId,
-            @RequestParam(required = true) Long cardId,
+            @RequestBody(required = true) PaymentRequestDTO paymentRequest,
             @RequestHeader(required = true) String userToken
     ) {
         coreService.validateUserToken(userToken);
 
-        PaymentDataDTO paymentData = new PaymentDataDTO(eventId,seatId,cardId,userToken);
+        PaymentDataDTO paymentData = new PaymentDataDTO(
+                paymentRequest.eventId(),
+                paymentRequest.seatId(),
+                paymentRequest.cardId(),
+                userToken
+        );
 
+        System.out.println(paymentRequest);
 
+        PaymentResponseDTO result = paymentService.payForReservation(paymentData);
 
-        return new ResponseEntity<>(new PaymentResponseDTO(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

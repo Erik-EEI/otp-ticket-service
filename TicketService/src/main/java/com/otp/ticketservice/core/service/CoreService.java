@@ -26,7 +26,7 @@ public class CoreService implements CoreServiceInterface {
     }
 
     @Override
-    public boolean matchCardToUser( Long cardId, String token ){
+    public boolean matchCardToUser( String cardId, String token ){
         User tokenOwner = tokenService.getUserFromToken( token );
         User cardOwner = cardService.getCardById( cardId ).getUser();
 
@@ -35,7 +35,7 @@ public class CoreService implements CoreServiceInterface {
     }
 
     @Override
-    public boolean checkIfAmountIsAvailable(Long cardId, double amount){
+    public boolean checkIfAmountIsAvailable(String cardId, double amount){
         return cardService.checkIfAmountIsAvailable(cardId,amount);
     }
 }
