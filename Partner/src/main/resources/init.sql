@@ -1,7 +1,7 @@
 -- EVENTS
-INSERT INTO event (title, location, start_timestamp, end_timestamp) VALUES ('Szilveszteri zártkörű rendezvény', 'Greenwich', 1577836800, 1577844000);
-INSERT INTO event (title, location, start_timestamp, end_timestamp) VALUES ('Májusi mulatság', 'Budapest', 1588334400, 1588348800);
-INSERT INTO event (title, location, start_timestamp, end_timestamp) VALUES ('Necc party', 'Debrecen', 1607731200, 1607817599);
+INSERT INTO event (title, location, start_timestamp, end_timestamp) VALUES ('Szilveszteri zártkörű rendezvény', 'Greenwich', '1577836800', '1577844000');
+INSERT INTO event (title, location, start_timestamp, end_timestamp) VALUES ('Májusi mulatság', 'Budapest', '1588334400', '1588348800');
+INSERT INTO event (title, location, start_timestamp, end_timestamp) VALUES ('Necc party', 'Debrecen', '1607731200', '1607817599');
 
 -- EVENT SEATS
 -- Event 1 seats

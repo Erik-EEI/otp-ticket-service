@@ -1,6 +1,7 @@
 package com.otp.ticketservice.ticket.service;
 
 import com.otp.ticketservice.api.dto.EventDataDTO;
+import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventListResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventWithSeatsResponseDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
@@ -27,6 +28,18 @@ public class EventService implements EventServiceInterface {
         String url = UrlBuilder.buildUrl("getEvent",params);
 
         return HttpRequestUtil.getRequest(url,EventWithSeatsResponseDTO.class);
+    }
+
+    @Override
+    public EventDTO getEventDetails(Long eventId){
+        EventListResponseDTO allEvents = this.getAllEvents();
+
+        return getAllEvents()
+                .getData()
+                .stream()
+                .filter(event->event.getEventId() == eventId)
+                .findFirst()
+                .orElseThrow(RuntimeException::new); // TODO Replace exception & review logic
     }
 }
 

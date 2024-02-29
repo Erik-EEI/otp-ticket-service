@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -20,8 +21,8 @@ public class Event {
 
     private String title;
     private String location;
-    private Long startTimestamp;
-    private Long endTimestamp;
+    private String startTimestamp;
+    private String endTimestamp;
 
     @OneToMany(mappedBy = "event")
     private List<Seat> seats;

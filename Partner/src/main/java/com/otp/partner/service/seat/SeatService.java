@@ -5,6 +5,7 @@ import com.otp.partner.exception.SeatNotFoundException;
 import com.otp.partner.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SeatService {
@@ -20,7 +21,7 @@ public class SeatService {
         return seatRepository.findById(seatId)
                 .orElseThrow(SeatNotFoundException::new);
     }
-
+    @Transactional //TODO research further transactional
     public void updateSeatReserved(Long seatId, boolean reserved) {
         Seat seat = this.findSeatById(seatId);
         seat.setReserved(reserved);
