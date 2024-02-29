@@ -2,6 +2,7 @@ package com.otp.partner.controller.reservation;
 
 import com.otp.partner.dto.ReservationDTO;
 import com.otp.partner.dto.request.ReservationRequestDTO;
+import com.otp.partner.dto.response.ApiReservationResponse;
 import com.otp.partner.dto.response.ApiResponse;
 import com.otp.partner.entity.Reservation;
 import com.otp.partner.service.reservation.ReservationService;
@@ -22,12 +23,12 @@ public class ReservationController {
     }
 
     @PostMapping("/reserve")
-    public ResponseEntity<ApiResponse> createReservation(@RequestBody ReservationRequestDTO reservationData) {
+    public ResponseEntity<ApiReservationResponse> createReservation(@RequestBody ReservationRequestDTO reservationData) {
         Long eventId = reservationData.eventId();
         Long seatId = reservationData.seatId();
         Long reservationId = reservationService.createReservation(eventId, seatId);
 
-        return new ResponseEntity<>(new ApiResponse(reservationId, true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiReservationResponse(reservationId, true), HttpStatus.OK);
     }
 
     @GetMapping("/reservation")
