@@ -3,6 +3,7 @@ package com.otp.ticketservice.ticket.dao;
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
 import com.otp.ticketservice.ticket.utils.UrlBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +14,15 @@ import java.util.Map;
 @Repository
 public class EventDAO {
 
+    private final UrlBuilder urlBuilder;
+
+    @Autowired
+    public EventDAO(UrlBuilder urlBuilder) {
+        this.urlBuilder = urlBuilder;
+    }
+
     public HttpResponse<String> getAllEvents(){
-        String url = UrlBuilder.buildUrl("getEvents");
+        String url = urlBuilder.buildUrl("getEvents");
 
         return HttpRequestUtil.getRequest(url);
     }
@@ -23,7 +31,7 @@ public class EventDAO {
         Map<String,String> params = new HashMap<>();
         params.put("eventId",eventData.eventId().toString());
 
-        String url = UrlBuilder.buildUrl("getEvent",params);
+        String url = urlBuilder.buildUrl("getEvent",params);
 
         return HttpRequestUtil.getRequest(url);
     }
@@ -33,7 +41,7 @@ public class EventDAO {
         params.put("eventId",eventData.eventId().toString());
         params.put("detailed","true");
 
-        String url = UrlBuilder.buildUrl("getEvent",params);
+        String url = urlBuilder.buildUrl("getEvent",params);
 
         return HttpRequestUtil.getRequest(url);
 

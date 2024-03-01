@@ -1,24 +1,23 @@
 package com.otp.ticketservice.ticket.utils;
 
-import io.github.cdimascio.dotenv.Dotenv;
-import lombok.experimental.UtilityClass;
 import org.springframework.beans.factory.annotation.Value;
-
+import org.springframework.stereotype.Component;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-@UtilityClass
+@Component
 public class UrlBuilder {
-    private static final Dotenv dotenv = Dotenv.load();
-    private static final String baseUrl = dotenv.get("API_BASE_URL");
 
+    @Value("${api.base.url}")
+    private String baseUrl;
 
-    public static String buildUrl(String endpoint) {
+    public String buildUrl(String endpoint) {
         return baseUrl + endpoint;
     }
-    public static String buildUrl(String endpoint, Map<String, String> queryParams) {
+
+    public String buildUrl(String endpoint, Map<String, String> queryParams) {
         StringBuilder urlBuilder = new StringBuilder(baseUrl + endpoint);
 
         if (queryParams != null && !queryParams.isEmpty()) {
