@@ -40,6 +40,7 @@ public class ApiController {
 
         EventListDTO events = eventService.getAllEvents();
 
+        LOGGER.info("Response sent to GET Request from /getEvents");
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
@@ -55,6 +56,7 @@ public class ApiController {
 
         EventSeatsDTO eventWithSeats = eventService.getEvent(eventData);
 
+        LOGGER.info("Response sent to GET Request from /getEvent");
         return new ResponseEntity<>(eventWithSeats, HttpStatus.OK);
     }
 
@@ -75,6 +77,7 @@ public class ApiController {
 
         PaymentResponseDTO result = paymentService.payForReservation(paymentData);
 
+        LOGGER.info("Response sent to POST Request from /pay");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

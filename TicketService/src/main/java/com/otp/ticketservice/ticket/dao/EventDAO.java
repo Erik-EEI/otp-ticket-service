@@ -4,7 +4,6 @@ import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
 import com.otp.ticketservice.ticket.utils.UrlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.net.http.HttpResponse;

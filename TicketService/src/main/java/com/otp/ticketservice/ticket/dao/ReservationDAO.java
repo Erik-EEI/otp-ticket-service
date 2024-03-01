@@ -3,6 +3,7 @@ package com.otp.ticketservice.ticket.dao;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.ticket.utils.HttpRequestUtil;
 import com.otp.ticketservice.ticket.utils.UrlBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.net.http.HttpResponse;
@@ -12,9 +13,14 @@ import java.util.Map;
 @Repository
 public class ReservationDAO {
 
-    private static UrlBuilder urlBuilder;
+    private final UrlBuilder urlBuilder;
 
-    public static HttpResponse<String> makeReservation( PaymentDataDTO paymentData ){
+    @Autowired
+    public ReservationDAO(UrlBuilder urlBuilder){
+        this.urlBuilder = urlBuilder;
+    }
+
+    public HttpResponse<String> makeReservation( PaymentDataDTO paymentData ){
         Map<String,String> queryParams = new HashMap<>();
         queryParams.put("eventId", String.valueOf(paymentData.eventId()));
         queryParams.put("seatId", String.valueOf(paymentData.seatId()));

@@ -5,16 +5,16 @@ import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
 import com.otp.ticketservice.ticket.dao.ReservationDAO;
 import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventDTO;
-import com.otp.ticketservice.ticket.dto.event_list.EventDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
-import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.mapper.EventMapper;
 import com.otp.ticketservice.ticket.mapper.PaymentMapper;
-import com.otp.ticketservice.ticket.utils.HttpResponseExceptionHandler;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
 import com.otp.ticketservice.ticket.utils.TimestampHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
@@ -23,10 +23,14 @@ import java.net.http.HttpResponse;
 public class PaymentService {
     private final CoreServiceInterface coreService;
     private final EventServiceInterface eventService;
+    private final ReservationService reservationService;
+    private final Logger LOGGER = LoggerFactory.getLogger("[TICKET - PAYMENT SERVICE]");
 
-    public PaymentService(CoreServiceInterface coreService, EventServiceInterface eventService) {
+    @Autowired
+    public PaymentService(CoreServiceInterface coreService, EventServiceInterface eventService, ReservationService reservationService) {
         this.coreService = coreService;
         this.eventService = eventService;
+        this.reservationService = reservationService;
     }
 
     public PaymentResponseDTO payForReservation(PaymentDataDTO paymentData){
@@ -39,10 +43,12 @@ public class PaymentService {
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
         coreService.checkIfAmountIsAvailable(paymentData.cardID(), seat.getPrice());
 
-        HttpResponse<String> response = ReservationDAO.makeReservation( paymentData );
-        HttpResponseExceptionHandler.checkForException( response );
+        HttpResponse<String> response = reservationService.makeReservation( paymentData );
+        PaymentResponseDTO reservationData = PaymentMapper.mapToPaymentResponseDTO( response );
+        LOGGER.info(String.format("✔ - COMPLETED -- RESERVATION MADE with id -> %d", reservationData.reservationId()));
 
-        return PaymentMapper.mapToPaymentResponseDTO( response );
+
+        return reservationData;
     }
 }
 
