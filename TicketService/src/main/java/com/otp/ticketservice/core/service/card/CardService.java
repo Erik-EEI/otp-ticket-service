@@ -27,4 +27,12 @@ public class CardService implements CardServiceInterface {
 
         if(!(card.getAmount() >= amount)) throw new NotEnoughAmountOnCardException();
     }
+
+    public void updateAmount(String cardId, double amount){
+        UserBankCard card = this.getCardById(cardId);
+        double currentAmount = card.getAmount();
+
+        card.setAmount( currentAmount + amount );
+        userBankCardRepository.save(card);
+    }
 }
