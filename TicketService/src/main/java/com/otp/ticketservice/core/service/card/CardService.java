@@ -28,6 +28,7 @@ public class CardService implements CardServiceInterface {
         if(!(card.getAmount() >= amount)) throw new NotEnoughAmountOnCardException();
     }
 
+    @Override
     public void updateAmount(String cardId, double amount){
         UserBankCard card = this.getCardById(cardId);
         double currentAmount = card.getAmount();
