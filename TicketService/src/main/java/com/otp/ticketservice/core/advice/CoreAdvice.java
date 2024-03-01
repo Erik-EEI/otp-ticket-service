@@ -16,26 +16,26 @@ public class CoreAdvice {
     private final Logger LOGGER = LoggerFactory.getLogger("[CORE MODULE]");
     @ExceptionHandler(CardNotMatchUserException.class)
     public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(CardNotMatchUserException ex) {
-        LOGGER.error(ex.getMessage());
+        LOGGER.error(String.format("❌ - / %s / - %s",ex.getErrorCode(),ex.getMessage()));
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
     @ExceptionHandler(NotEnoughAmountOnCardException.class)
     public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(NotEnoughAmountOnCardException ex) {
-        LOGGER.error(ex.getMessage());
+        LOGGER.error(String.format("❌ - / %s / - %s",ex.getErrorCode(),ex.getMessage()));
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
     @ExceptionHandler(TokenCanNotBeDecodedException.class)
     public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(TokenCanNotBeDecodedException ex) {
-        LOGGER.error(ex.getMessage());
+        LOGGER.error(String.format("❌ - / %s / - %s",ex.getErrorCode(),ex.getMessage()));
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(TokenNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(TokenNotFoundException ex) {
-        LOGGER.error(ex.getMessage());
+        LOGGER.error(String.format("❌ - / %s / - %s",ex.getErrorCode(),ex.getMessage()));
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
@@ -43,7 +43,7 @@ public class CoreAdvice {
     public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(MissingRequestHeaderException ex) {
         NoTokenInRequestHeaderException customEx = new NoTokenInRequestHeaderException();
         ApiErrorResponse response = new ApiErrorResponse(customEx.getMessage(), customEx.getErrorCode(),false);
-        LOGGER.error(customEx.getMessage());
+        LOGGER.error(String.format("❌ - / %s / - %s",customEx.getErrorCode(),customEx.getMessage()));
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }

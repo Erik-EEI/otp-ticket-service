@@ -29,18 +29,18 @@ public class EventService implements EventServiceInterface {
     @Cacheable("all_events")
     public EventListDTO getAllEvents(){
         HttpResponse<String> response = eventDAO.getAllEvents();
-        LOGGER.info("SENT events request to partner");
+        LOGGER.info("- ⏩ - SENT events request to partner");
         HttpResponseExceptionHandler.checkForException( response );
-        LOGGER.info("RECEIVED events response from partner");
+        LOGGER.info("- ⏪ - RECEIVED events response from partner");
 
         return EventMapper.mapToEventListDTO( response );
     }
     @Override
     public EventSeatsDTO getEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getEvent(eventData);
-        LOGGER.info(String.format("SENT event request to partner for event id %s", eventData.eventId()));
+        LOGGER.info(String.format("- ⏩ - SENT event request to partner for event id %s", eventData.eventId()));
         HttpResponseExceptionHandler.checkForException( response );
-        LOGGER.info(String.format("RECEIVED event response from partner for event id %s", eventData.eventId()));
+        LOGGER.info(String.format("- ⏪ - RECEIVED event response from partner for event id %s", eventData.eventId()));
 
         return EventMapper.mapToEventSeatsDTO( response );
     }
@@ -48,9 +48,9 @@ public class EventService implements EventServiceInterface {
     @Override
     public DetailedEventDTO getDetailedEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getDetailedEvent(eventData);
-        LOGGER.info(String.format("SENT event request to partner for event id %s", eventData.eventId()));
+        LOGGER.info(String.format("- ⏩ - SENT event request to partner for event id %s", eventData.eventId()));
         HttpResponseExceptionHandler.checkForException( response );
-        LOGGER.info(String.format("Received detailed event response from partner for event id %s", eventData.eventId()));
+        LOGGER.info(String.format("- ⏪ - Received detailed event response from partner for event id %s", eventData.eventId()));
 
         return EventMapper.mapToDetailedEventDTO(response);
     }

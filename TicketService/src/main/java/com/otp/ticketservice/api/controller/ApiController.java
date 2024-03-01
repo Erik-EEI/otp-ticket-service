@@ -35,12 +35,12 @@ public class ApiController {
     public ResponseEntity<EventListDTO> getEvents(
             @RequestHeader(required = true) String userToken
     ) {
-        LOGGER.info("GET REQUEST for /getEvents");
+        LOGGER.info(" » GET REQUEST for /getEvents");
         coreService.validateUserToken(userToken);
 
         EventListDTO events = eventService.getAllEvents();
 
-        LOGGER.info("Response sent to GET Request from /getEvents");
+        LOGGER.info(" « RESPONSE sent to GET Request from /getEvents");
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
@@ -49,14 +49,14 @@ public class ApiController {
             @RequestParam(required = true) Long eventId,
             @RequestHeader(required = true) String userToken
     ) {
-        LOGGER.info("GET REQUEST for /getEvent");
+        LOGGER.info(" » GET REQUEST for /getEvent");
         coreService.validateUserToken(userToken);
 
         EventDataDTO eventData = new EventDataDTO(eventId);
 
         EventSeatsDTO eventWithSeats = eventService.getEvent(eventData);
 
-        LOGGER.info("Response sent to GET Request from /getEvent");
+        LOGGER.info(" « RESPONSE sent to GET Request from /getEvent");
         return new ResponseEntity<>(eventWithSeats, HttpStatus.OK);
     }
 
@@ -65,7 +65,7 @@ public class ApiController {
             @RequestBody(required = true) PaymentRequestDTO paymentRequest,
             @RequestHeader(required = true) String userToken
     ) {
-        LOGGER.info("POST REQUEST for /pay");
+        LOGGER.info(" » POST REQUEST for /pay");
         coreService.validateUserToken(userToken);
 
         PaymentDataDTO paymentData = new PaymentDataDTO(
@@ -77,7 +77,7 @@ public class ApiController {
 
         PaymentResponseDTO result = paymentService.payForReservation(paymentData);
 
-        LOGGER.info("Response sent to POST Request from /pay");
+        LOGGER.info(" « RESPONSE sent to POST Request from /pay");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
