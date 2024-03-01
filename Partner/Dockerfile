@@ -1,9 +1,23 @@
+# First stage: Build the project
+FROM openjdk:17-jdk-slim AS builder
+
+WORKDIR /app
+
+COPY pom.xml mvnw ./
+COPY .mvn .mvn
+RUN ./mvnw dependency:resolve
+
+COPY src src
+RUN ./mvnw clean package -DskipTests=true
+
+# Second stage: Create the final image
 FROM eclipse-temurin:17-jdk-focal
 
 WORKDIR /app
 
-COPY target/Partner-0.0.1-SNAPSHOT.jar /app/partner-module.jar
+COPY --from=builder /app/target/Partner-0.0.1-SNAPSHOT.jar ./partner.jar
 
 EXPOSE 8081
 
-CMD ["java", "-jar", "partner-module.jar"]
+# Command to run the application
+CMD ["java", "-jar", "partner.jar"]
