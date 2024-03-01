@@ -23,7 +23,7 @@ public class ApiController {
     private final CoreServiceInterface coreService;
     private final PaymentService paymentService; //TODO replace with interface dependency
     private final EventServiceInterface eventService;
-    private final Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger("[API MODULE]");
 
     public ApiController(CoreServiceInterface coreService, PaymentService paymentService, EventService eventService) {
         this.coreService = coreService;
@@ -35,7 +35,7 @@ public class ApiController {
     public ResponseEntity<EventListDTO> getEvents(
             @RequestHeader(required = true) String userToken
     ) {
-        LOGGER.info("REQUEST for /getEvents");
+        LOGGER.info("GET REQUEST for /getEvents");
         coreService.validateUserToken(userToken);
 
         EventListDTO events = eventService.getAllEvents();
@@ -48,7 +48,7 @@ public class ApiController {
             @RequestParam(required = true) Long eventId,
             @RequestHeader(required = true) String userToken
     ) {
-        LOGGER.info("REQUEST for /getEvent");
+        LOGGER.info("GET REQUEST for /getEvent");
         coreService.validateUserToken(userToken);
 
         EventDataDTO eventData = new EventDataDTO(eventId);
@@ -63,7 +63,7 @@ public class ApiController {
             @RequestBody(required = true) PaymentRequestDTO paymentRequest,
             @RequestHeader(required = true) String userToken
     ) {
-        LOGGER.info("REQUEST for /pay");
+        LOGGER.info("POST REQUEST for /pay");
         coreService.validateUserToken(userToken);
 
         PaymentDataDTO paymentData = new PaymentDataDTO(
