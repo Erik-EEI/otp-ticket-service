@@ -30,13 +30,4 @@ public class CardService implements CardServiceInterface {
         card.setAmount(card.getAmount() - amount );
         userBankCardRepository.save(card);
     }
-
-    @Override
-    public void updateAmount(String cardId, double amount){
-        UserBankCard card = this.getCardById(cardId);
-        double currentAmount = card.getAmount();
-
-        card.setAmount( currentAmount + amount );
-        userBankCardRepository.save(card);
-    }
 }
