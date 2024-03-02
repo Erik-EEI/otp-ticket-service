@@ -1,6 +1,7 @@
 package com.otp.ticketservice.ticket.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.otp.ticketservice.ticket.exceptions.ExternalSystemNotAvailableException;
 import lombok.experimental.UtilityClass;
 
 import java.net.URI;
@@ -28,7 +29,7 @@ public class HttpRequestUtil {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         } catch (Exception e) {
-            throw new RuntimeException("Error sending HTTP request", e);
+            throw new ExternalSystemNotAvailableException();
         }
     }
 
@@ -47,7 +48,7 @@ public class HttpRequestUtil {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         } catch (Exception e) {
-            throw new RuntimeException("Error sending HTTP POST request", e);// TODO Implement custom exception
+            throw new ExternalSystemNotAvailableException();
         }
     }
 }

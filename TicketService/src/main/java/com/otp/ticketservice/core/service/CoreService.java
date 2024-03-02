@@ -9,6 +9,7 @@ import com.otp.ticketservice.core.service.card.CardService;
 import com.otp.ticketservice.core.service.token.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +18,8 @@ public class CoreService implements CoreServiceInterface {
     private final TokenServiceInterface tokenService;
     private final Logger LOGGER = LoggerFactory.getLogger("[CORE SERVICE]");
 
-    public CoreService(CardService cardService, TokenService tokenService) {
+    @Autowired
+    public CoreService(CardServiceInterface cardService, TokenServiceInterface tokenService) {
         this.cardService = cardService;
         this.tokenService = tokenService;
     }

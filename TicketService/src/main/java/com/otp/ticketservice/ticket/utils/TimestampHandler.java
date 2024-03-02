@@ -1,5 +1,6 @@
 package com.otp.ticketservice.ticket.utils;
 
+import com.otp.ticketservice.ticket.exceptions.CanNotReserveSeatForEventInPastException;
 import lombok.experimental.UtilityClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class TimestampHandler {
         LocalDateTime eventDate = LocalDateTime.parse(dateString,formatter);
         LocalDateTime currentDate = LocalDateTime.now();
 
-        // if(currentDate.isAfter(eventDate)) throw new RuntimeException(""); //TODO Replace with custom exception
+        // if(currentDate.isAfter(eventDate)) throw new CanNotReserveSeatForEventInPastException(); //TODO Replace with custom exception
         LOGGER.info("✔ - VALID -- Event is not started in the past");
     }
 }
