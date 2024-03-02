@@ -9,6 +9,7 @@ import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
+import com.otp.ticketservice.ticket.interfaces.PaymentServiceInterface;
 import com.otp.ticketservice.ticket.service.EventService;
 import com.otp.ticketservice.ticket.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +31,12 @@ import org.springframework.web.bind.annotation.*;
 public class ApiController {
 
     private final CoreServiceInterface coreService;
-    private final PaymentService paymentService; //TODO replace with interface dependency
+    private final PaymentServiceInterface paymentService;
     private final EventServiceInterface eventService;
     private final Logger LOGGER = LoggerFactory.getLogger("[API MODULE]");
     private final String DEFAULT_USER_TOKEN = "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3";
 
+    @Autowired
     public ApiController(CoreServiceInterface coreService, PaymentService paymentService, EventService eventService) {
         this.coreService = coreService;
         this.paymentService = paymentService;

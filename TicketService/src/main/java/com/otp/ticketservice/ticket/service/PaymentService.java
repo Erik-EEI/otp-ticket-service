@@ -7,6 +7,7 @@ import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
+import com.otp.ticketservice.ticket.interfaces.PaymentServiceInterface;
 import com.otp.ticketservice.ticket.mapper.EventMapper;
 import com.otp.ticketservice.ticket.mapper.PaymentMapper;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
@@ -22,7 +23,7 @@ import java.net.http.HttpResponse;
  * Szia
  */
 @Service
-public class PaymentService {
+public class PaymentService implements PaymentServiceInterface {
     private final CoreServiceInterface coreService;
     private final EventServiceInterface eventService;
     private final ReservationService reservationService;
@@ -35,6 +36,7 @@ public class PaymentService {
         this.reservationService = reservationService;
     }
 
+    @Override
     public PaymentResponseDTO payForReservation(PaymentDataDTO paymentData){
         EventDataDTO eventDataDTO = EventMapper.mapToEventDataDTO( paymentData );
         DetailedEventDTO detailedEvent = eventService.getDetailedEvent(eventDataDTO);
