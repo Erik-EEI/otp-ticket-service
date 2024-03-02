@@ -23,7 +23,7 @@ public class CoreService implements CoreServiceInterface {
     }
 
     @Override
-    public void validateUserToken(String token ){
+    public void validateUserToken( String token ){
         tokenService.validate(token);
         LOGGER.info(String.format("✔ - VALID -- Valid token -> %s", token));
     }

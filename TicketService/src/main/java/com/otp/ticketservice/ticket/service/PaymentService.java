@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
 
+/**
+ * Szia
+ */
 @Service
 public class PaymentService {
     private final CoreServiceInterface coreService;
