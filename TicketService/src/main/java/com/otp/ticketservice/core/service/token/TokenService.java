@@ -25,7 +25,7 @@ public class TokenService implements TokenServiceInterface {
     @Override
     public User getUserFromToken( String token ){
         UserToken userToken = userTokenRepository.findUserTokenByToken(token)
-                .orElseThrow(RuntimeException::new); //TODO Handle exception
+                .orElseThrow(TokenNotFoundException::new);
 
         return userToken.getUser();
     }

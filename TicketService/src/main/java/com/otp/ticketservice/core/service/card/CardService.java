@@ -1,6 +1,7 @@
 package com.otp.ticketservice.core.service.card;
 
 import com.otp.ticketservice.core.entity.UserBankCard;
+import com.otp.ticketservice.core.exception.CardNotFoundException;
 import com.otp.ticketservice.core.exception.NotEnoughAmountOnCardException;
 import com.otp.ticketservice.core.interfaces.CardServiceInterface;
 import com.otp.ticketservice.core.repository.UserBankCardRepository;
@@ -17,7 +18,7 @@ public class CardService implements CardServiceInterface {
     @Override
     public UserBankCard getCardById(String cardId){
         return userBankCardRepository.findUserBankCardByCardId(cardId)
-                .orElseThrow(RuntimeException::new); // TODO Replace with custom exception
+                .orElseThrow(CardNotFoundException::new);
     }
 
     @Override
