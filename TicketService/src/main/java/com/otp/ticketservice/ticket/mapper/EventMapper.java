@@ -8,6 +8,7 @@ import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventWrapperDTO;
 import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.EventSeatsWrapperDTO;
+import com.otp.ticketservice.ticket.exceptions.UnexpectedResponseFromPartnerException;
 import lombok.experimental.UtilityClass;
 
 import java.net.http.HttpResponse;
@@ -20,7 +21,7 @@ public class EventMapper {
         try{
             return objectMapper.readValue(response.body(),EventListDTO.class);
         } catch (Exception e){
-            throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
+            throw new UnexpectedResponseFromPartnerException();
         }
     }
 
@@ -29,7 +30,7 @@ public class EventMapper {
             EventSeatsWrapperDTO wrapperDTO = objectMapper.readValue(response.body(),EventSeatsWrapperDTO.class);
             return wrapperDTO.data();
         } catch (Exception e){
-            throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
+            throw new UnexpectedResponseFromPartnerException();
         }
     }
 
@@ -38,7 +39,7 @@ public class EventMapper {
             DetailedEventWrapperDTO wrapperDTO = objectMapper.readValue(response.body(),DetailedEventWrapperDTO.class);
             return wrapperDTO.data();
         } catch (Exception e){
-            throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
+            throw new UnexpectedResponseFromPartnerException();
         }
     }
 

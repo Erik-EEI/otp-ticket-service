@@ -47,7 +47,7 @@ public class TicketAdvice {
     }
     @ExceptionHandler(CanNotReserveSeatForEventInPastException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ApiResponse(responseCode = "404", description = "Can not reserve seat for event in the past",
+    @ApiResponse(responseCode = "401", description = "Can not reserve seat for event in the past",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
     public ResponseEntity<ApiErrorResponse> handleCanNotReserveSeatForEventInPastException(CanNotReserveSeatForEventInPastException ex) {
         LOGGER.error(String.format("❌ - / %s / - %s",ex.getErrorCode(),ex.getMessage()));
@@ -72,6 +72,16 @@ public class TicketAdvice {
         ApiErrorResponse response = new ApiErrorResponse(customEx.getMessage(), customEx.getErrorCode(),false);
         LOGGER.error(String.format("❌ - / %s / - %s",response.errorCode(),response.message()));
         return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+    @ExceptionHandler(UnexpectedResponseFromPartnerException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ApiResponse(responseCode = "401", description = "Unexpected response from partner",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)))
+    public ResponseEntity<ApiErrorResponse> handleUnexpectedResponseFromPartnerException(UnexpectedResponseFromPartnerException ex) {
+        ExternalSystemNotAvailableException customEx = new ExternalSystemNotAvailableException();
+        ApiErrorResponse response = new ApiErrorResponse(customEx.getMessage(), customEx.getErrorCode(),false);
+        LOGGER.error(String.format("❌ - / %s / - %s",response.errorCode(),response.message()));
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
 }
