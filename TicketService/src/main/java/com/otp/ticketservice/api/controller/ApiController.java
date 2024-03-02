@@ -76,7 +76,9 @@ public class ApiController {
     })
     @GetMapping("getEvent")
     public ResponseEntity<EventSeatsDTO> getEventById(
+            @Parameter(in = ParameterIn.DEFAULT, required = true, description = "ID of the required event", example="1")
             @RequestParam(required = true) Long eventId,
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "User Token", example=DEFAULT_USER_TOKEN)
             @RequestHeader(required = true) String userToken
     ) {
         LOGGER.info(" » GET REQUEST for /getEvent");
@@ -103,7 +105,9 @@ public class ApiController {
     })
     @PostMapping("pay")
     public ResponseEntity<PaymentResponseDTO> getEventById(
+            @Parameter(required = true, description = "Data required for reserving a seat at an event")
             @RequestBody(required = true) PaymentRequestDTO paymentRequest,
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "User Token", example=DEFAULT_USER_TOKEN)
             @RequestHeader(required = true) String userToken
     ) {
         LOGGER.info(" » POST REQUEST for /pay");
