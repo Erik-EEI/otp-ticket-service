@@ -21,11 +21,14 @@ public class CardService implements CardServiceInterface {
     }
 
     @Override
-    public void checkIfAmountIsAvailable(String cardId, double amount){
+    public void processPayment(String cardId, double amount){
         UserBankCard card = userBankCardRepository.findUserBankCardByCardId(cardId)
                 .orElseThrow(NotEnoughAmountOnCardException::new);
 
         if(!(card.getAmount() >= amount)) throw new NotEnoughAmountOnCardException();
+
+        card.setAmount(card.getAmount() - amount );
+        userBankCardRepository.save(card);
     }
 
     @Override

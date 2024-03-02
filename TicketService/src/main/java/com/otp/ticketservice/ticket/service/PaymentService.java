@@ -3,7 +3,6 @@ package com.otp.ticketservice.ticket.service;
 import com.otp.ticketservice.api.dto.EventDataDTO;
 import com.otp.ticketservice.api.dto.PaymentDataDTO;
 import com.otp.ticketservice.core.interfaces.CoreServiceInterface;
-import com.otp.ticketservice.ticket.dao.ReservationDAO;
 import com.otp.ticketservice.ticket.dto.detailed_event.DetailedEventDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
@@ -44,7 +43,7 @@ public class PaymentService {
         TimestampHandler.checkStartTime(detailedEvent.startTimeStamp());
         SeatHandler.validateIfSeatIsReservable(seat);
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
-        coreService.checkIfAmountIsAvailable(paymentData.cardID(), seat.getPrice());
+        coreService.payWithCard(paymentData.cardID(), seat.getPrice());
 
         HttpResponse<String> response = reservationService.makeReservation( paymentData );
         PaymentResponseDTO reservationData = PaymentMapper.mapToPaymentResponseDTO( response );

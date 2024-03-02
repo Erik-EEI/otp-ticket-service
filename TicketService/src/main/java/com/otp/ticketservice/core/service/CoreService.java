@@ -38,8 +38,8 @@ public class CoreService implements CoreServiceInterface {
     }
 
     @Override
-    public void checkIfAmountIsAvailable(String cardId, double amount){
-         cardService.checkIfAmountIsAvailable(cardId,amount);
+    public void payWithCard(String cardId, double amount){
+         cardService.processPayment(cardId,amount);
          LOGGER.info(String.format("✔ - VALID -- Requested amount is available on card %S",cardId));
     }
 }
