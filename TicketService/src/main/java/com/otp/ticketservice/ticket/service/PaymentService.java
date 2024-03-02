@@ -45,7 +45,7 @@ public class PaymentService implements PaymentServiceInterface {
         TimestampHandler.checkStartTime(detailedEvent.startTimeStamp());
         SeatHandler.validateIfSeatIsReservable(seat);
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
-        coreService.payWithCard(paymentData.cardID(), seat.getPrice());
+        coreService.payWithCard(paymentData.cardID(), seat.price());
 
         HttpResponse<String> response = reservationService.makeReservation( paymentData );
         PaymentResponseDTO reservationData = PaymentMapper.mapToPaymentResponseDTO( response );

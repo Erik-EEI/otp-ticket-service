@@ -27,7 +27,7 @@ public class EventMapper {
     public static EventSeatsDTO mapToEventSeatsDTO(HttpResponse<String> response){
         try{
             EventSeatsWrapperDTO wrapperDTO = objectMapper.readValue(response.body(),EventSeatsWrapperDTO.class);
-            return wrapperDTO.getData();
+            return wrapperDTO.data();
         } catch (Exception e){
             throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
         }

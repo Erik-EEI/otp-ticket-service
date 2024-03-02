@@ -17,13 +17,13 @@ public class SeatHandler {
     public static SeatDTO getSeat(List<SeatDTO> seatList, Long seatId){
         return seatList
                 .stream()
-                .filter(seatDTO-> seatDTO.getId() == seatId)
+                .filter(seatDTO-> seatDTO.id() == seatId)
                 .findFirst()
                 .orElseThrow(SeatDoesNotExistException::new);
     }
 
     public static void validateIfSeatIsReservable( SeatDTO seat ){
-        if (seat.isReserved()) throw new CanNotReserveOccupiedSeatException();
+        if (seat.reserved()) throw new CanNotReserveOccupiedSeatException();
         LOGGER.info("✔ - VALID -- Seat is reservable");
     }
 }

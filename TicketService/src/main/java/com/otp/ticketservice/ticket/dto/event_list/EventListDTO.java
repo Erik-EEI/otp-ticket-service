@@ -4,8 +4,7 @@ import java.util.List;
 
 import lombok.Data;
 
-@Data
-public class EventListDTO { //TODO Convert to record
-    private List<EventDTO> data;
-    private boolean success;
-}
+public record EventListDTO(
+        List<EventDTO> data,
+        boolean success
+) {}
