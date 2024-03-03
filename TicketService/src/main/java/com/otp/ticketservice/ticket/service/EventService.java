@@ -10,6 +10,7 @@ import com.otp.ticketservice.ticket.mapper.EventMapper;
 import com.otp.ticketservice.ticket.utils.HttpResponseExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class EventService implements EventServiceInterface {
     private final EventDAO eventDAO;
     private final Logger LOGGER = LoggerFactory.getLogger("[TICKET - EVENT SERVICE]");
 
+    @Autowired
     public EventService(EventDAO eventDAO) {
         this.eventDAO = eventDAO;
     }
@@ -29,6 +31,7 @@ public class EventService implements EventServiceInterface {
     @Cacheable("all_events")
     public EventListDTO getAllEvents(){
         HttpResponse<String> response = eventDAO.getAllEvents();
+        System.out.println(response.body());
         LOGGER.info("- ⏩ - SENT events request to partner");
         HttpResponseExceptionHandler.checkForException( response );
         LOGGER.info("- ⏪ - RECEIVED events response from partner");
@@ -38,6 +41,7 @@ public class EventService implements EventServiceInterface {
     @Override
     public EventSeatsDTO getEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getEvent(eventData);
+        System.out.println(response.body());
         LOGGER.info(String.format("- ⏩ - SENT event request to partner for event id %s", eventData.eventId()));
         HttpResponseExceptionHandler.checkForException( response );
         LOGGER.info(String.format("- ⏪ - RECEIVED event response from partner for event id %s", eventData.eventId()));
@@ -54,5 +58,6 @@ public class EventService implements EventServiceInterface {
 
         return EventMapper.mapToDetailedEventDTO(response);
     }
+
 }
 

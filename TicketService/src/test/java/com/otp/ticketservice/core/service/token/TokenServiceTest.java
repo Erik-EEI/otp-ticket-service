@@ -4,14 +4,10 @@ import com.otp.ticketservice.core.entity.User;
 import com.otp.ticketservice.core.entity.UserToken;
 import com.otp.ticketservice.core.exception.TokenNotFoundException;
 import com.otp.ticketservice.core.repository.UserTokenRepository;
-import com.otp.ticketservice.core.service.CoreService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
