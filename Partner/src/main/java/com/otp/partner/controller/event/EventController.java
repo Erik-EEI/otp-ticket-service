@@ -31,7 +31,7 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
-    private final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger("[EVENT CONTROLLER]");
 
     @Autowired
     public EventController(EventService eventService) {
@@ -49,11 +49,12 @@ public class EventController {
     })
     @GetMapping("getEvents")
     public ResponseEntity<ApiResponseDTO> getEvents() {
-        LOGGER.info("GET REQUEST at /getEvents endpoint");
+        LOGGER.info(" » GET REQUEST at /getEvents endpoint");
         List<Event> events = eventService.getAllEvents();
 
         List<EventDTO> eventDTOS = EventMapper.mapToEventDTOList( events );
 
+        LOGGER.info(" « RESPONSE sent to GET Request from /getEvents");
         return new ResponseEntity<>(new ApiResponseDTO(eventDTOS,true), HttpStatus.OK);
     }
 
@@ -75,17 +76,19 @@ public class EventController {
             @Parameter(in = ParameterIn.DEFAULT, required = true, description = "If its value is true, the response will contain every detail of the event, not just the id and seats")
             @RequestParam(defaultValue = "false") boolean detailed
     ) {
-        LOGGER.info("GET REQUEST at /getEvent endpoint");
+        LOGGER.info(String.format(" » GET REQUEST at /getEvent endpoint with ID %s | DETAILED : %s", eventId,detailed));
         Event event = eventService.getEventById(eventId);
 
         if(detailed){
             DetailedEventDTO detailedEvent = EventMapper.mapToDetailedEventDTO( event );
 
+            LOGGER.info(String.format(" « RESPONSE sent to GET Request at /getEvent endpoint with ID %s | DETAILED", eventId));
             return new ResponseEntity<>(new ApiResponseDTO(detailedEvent,true), HttpStatus.OK);
         }
 
         EventSeatsDTO responseDTO = EventMapper.mapToEventSeatsDTO( event );
 
+        LOGGER.info(String.format(" « RESPONSE sent to GET Request at /getEvent endpoint with ID %s | SIMPLE", eventId));
         return new ResponseEntity<>(new ApiResponseDTO(responseDTO,true), HttpStatus.OK);
     }
 }

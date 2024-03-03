@@ -1,8 +1,11 @@
 package com.otp.partner.service.event;
 
+import com.otp.partner.controller.event.EventController;
 import com.otp.partner.entity.Event;
 import com.otp.partner.exception.EventNotFoundException;
 import com.otp.partner.repository.EventRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import java.util.List;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final Logger LOGGER = LoggerFactory.getLogger("[EVENT SERVICE]");
 
     @Autowired
     public EventService(EventRepository eventRepository){
@@ -19,10 +23,12 @@ public class EventService {
     }
 
     public List<Event> getAllEvents() {
+        LOGGER.info("► \uD83D\uDCC2 - Getting all events from database");
         return eventRepository.findAll();
     }
 
     public Event getEventById(Long eventId) {
+        LOGGER.info(String.format("► \uD83D\uDCC2 - Getting event with ID %s from database",eventId));
         return eventRepository.findById(eventId)
                 .orElseThrow(EventNotFoundException::new);
     }
