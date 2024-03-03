@@ -9,6 +9,8 @@ import com.otp.partner.exception.SeatNotFoundException;
 import com.otp.partner.repository.ReservationRepository;
 import com.otp.partner.service.event.EventService;
 import com.otp.partner.service.seat.SeatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final SeatService seatService;
     private final EventService eventService;
+    private final Logger LOGGER = LoggerFactory.getLogger("[RESERVATION SERVICE]");
 
     @Autowired
     public ReservationService(ReservationRepository reservationRepository, SeatService seatService, EventService eventService) {
@@ -40,11 +43,13 @@ public class ReservationService {
         reservation.setSeat(seat);
 
         Reservation savedReservation = reservationRepository.save(reservation);
+        LOGGER.info(String.format("✔️ - Saved reservation with ID %s into database",savedReservation.getId()));
         return savedReservation.getId();
     }
 
     public Reservation getReservationById(Long reservationId) {
 
+        LOGGER.info(String.format("► \uD83D\uDCC2 - Getting reservation with ID %s from database",reservationId));
         return reservationRepository.findById(reservationId)
                 .orElseThrow(ReservationNotFoundException::new);
     }
@@ -55,5 +60,6 @@ public class ReservationService {
         seatService.updateSeatReserved(reservation.getSeat().getId(),false);
 
         reservationRepository.delete(reservation);
+        LOGGER.info(String.format("✔️ - Reservation cancelled with ID %s from database",reservationId));
     }
 }

@@ -47,11 +47,12 @@ public class ReservationController {
     })
     @PostMapping("/reserve")
     public ResponseEntity<ApiReservationResponse> createReservation(@RequestBody ReservationRequestDTO reservationData) {
-        LOGGER.info("POST REQUEST at /reserve endpoint");
+        LOGGER.info(String.format(" » POST REQUEST at /reserve endpoint | EventId: %s , SeatId: %s", reservationData.eventId(),reservationData.seatId()));
         Long eventId = reservationData.eventId();
         Long seatId = reservationData.seatId();
         Long reservationId = reservationService.createReservation(eventId, seatId);
 
+        LOGGER.info(String.format(" « RESPONSE Sent to POST REQUEST at /reserve endpoint | EventId: %s , SeatId: %s", reservationData.eventId(),reservationData.seatId()));
         return new ResponseEntity<>(new ApiReservationResponse(reservationId, true), HttpStatus.OK);
     }
 
@@ -68,10 +69,11 @@ public class ReservationController {
     })
     @GetMapping("/reservation")
     public ResponseEntity<ApiResponseDTO> getReservationById(@RequestParam Long reservationId) {
-        LOGGER.info("GET REQUEST at /reservation endpoint");
+        LOGGER.info(String.format(" » GET REQUEST at /reserve endpoint | reservation ID: %s",reservationId));
         Reservation reservation = reservationService.getReservationById(reservationId);
         ReservationDTO reservationDTO = ReservationMapper.mapToReservationDTO( reservation );
 
+        LOGGER.info(String.format(" « RESPONSE Sent to GET REQUEST at /reserve endpoint | reservation ID: %s",reservationId));
         return new ResponseEntity<>(new ApiResponseDTO(reservationDTO, true), HttpStatus.OK);
     }
 
@@ -88,8 +90,9 @@ public class ReservationController {
     })
     @DeleteMapping("/reservation")
     public ResponseEntity<ApiResponseDTO> cancelReservation(@RequestParam Long reservationId) {
-        LOGGER.info("DELETE REQUEST at /reservation endpoint");
+        LOGGER.info(String.format(" » DELETE REQUEST at /reserve endpoint | reservation ID: %s",reservationId));
         reservationService.cancelReservation(reservationId);
+        LOGGER.info(String.format(" « RESPONSE Sent to DELETE REQUEST at /reserve endpoint | reservation ID: %s",reservationId));
         return new ResponseEntity<>(new ApiResponseDTO("Reservation with ID " + reservationId + " cancelled", true), HttpStatus.OK);
     }
 }
