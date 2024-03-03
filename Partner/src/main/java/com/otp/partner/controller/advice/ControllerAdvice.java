@@ -1,6 +1,6 @@
 package com.otp.partner.controller.advice;
 
-import com.otp.partner.dto.response.ApiErrorResponse;
+import com.otp.partner.dto.response.ApiErrorResponseDTO;
 import com.otp.partner.exception.EventNotFoundException;
 import com.otp.partner.exception.ReservationNotFoundException;
 import com.otp.partner.exception.SeatAlreadyReservedException;
@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerAdvice {
 
     @ExceptionHandler(EventNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(EventNotFoundException ex) {
-        ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
+    public ResponseEntity<ApiErrorResponseDTO> handleEventNotFoundException(EventNotFoundException ex) {
+        ApiErrorResponseDTO response = new ApiErrorResponseDTO(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ReservationNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleReservationNotFoundException(ReservationNotFoundException ex) {
-        ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
+    public ResponseEntity<ApiErrorResponseDTO> handleReservationNotFoundException(ReservationNotFoundException ex) {
+        ApiErrorResponseDTO response = new ApiErrorResponseDTO(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SeatNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleSeatNotFoundException(SeatNotFoundException ex) {
-        ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
+    public ResponseEntity<ApiErrorResponseDTO> handleSeatNotFoundException(SeatNotFoundException ex) {
+        ApiErrorResponseDTO response = new ApiErrorResponseDTO(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(SeatAlreadyReservedException.class)
-    public ResponseEntity<ApiErrorResponse> handleSeatAlreadyReservedException(SeatAlreadyReservedException ex) {
-        ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
+    public ResponseEntity<ApiErrorResponseDTO> handleSeatAlreadyReservedException(SeatAlreadyReservedException ex) {
+        ApiErrorResponseDTO response = new ApiErrorResponseDTO(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleGenericException(Exception ex) {
-        ApiErrorResponse response = new ApiErrorResponse("Internal Server Error",90000, false);
+    public ResponseEntity<ApiErrorResponseDTO> handleGenericException(Exception ex) {
+        ApiErrorResponseDTO response = new ApiErrorResponseDTO("Internal Server Error",90000, false);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

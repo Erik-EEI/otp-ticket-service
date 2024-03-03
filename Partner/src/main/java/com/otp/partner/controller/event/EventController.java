@@ -1,14 +1,18 @@
 package com.otp.partner.controller.event;
 
 import com.otp.partner.dto.DetailedEventDTO;
-import com.otp.partner.dto.response.ApiResponse;
+import com.otp.partner.dto.response.ApiErrorResponseDTO;
+import com.otp.partner.dto.response.ApiResponseDTO;
 import com.otp.partner.dto.EventDTO;
 import com.otp.partner.dto.EventSeatsDTO;
-import com.otp.partner.dto.SeatDTO;
 import com.otp.partner.entity.Event;
-import com.otp.partner.entity.Seat;
 import com.otp.partner.mapper.EventMapper;
 import com.otp.partner.service.event.EventService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,18 +34,38 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @Operation(summary = "Get all events")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returned all events",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponseDTO.class))}),
+            @ApiResponse(responseCode = "401", description = "Invalid api secret or key",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))})
+    })
     @GetMapping("getEvents")
-    public ResponseEntity<ApiResponse> getEvents() {
+    public ResponseEntity<ApiResponseDTO> getEvents() {
         LOGGER.info("GET REQUEST at /getEvents endpoint");
         List<Event> events = eventService.getAllEvents();
 
         List<EventDTO> eventDTOS = EventMapper.mapToEventDTOList( events );
 
-        return new ResponseEntity<>(new ApiResponse(eventDTOS,true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponseDTO(eventDTOS,true), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get a specific event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returned a specific event",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponseDTO.class))}),
+            @ApiResponse(responseCode = "401", description = "Invalid api secret or key",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "Event or seat not found",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))})
+    })
     @GetMapping("getEvent")
-    public ResponseEntity<ApiResponse> getEventById(
+    public ResponseEntity<ApiResponseDTO> getEventById(
             @RequestParam(required = true) Long eventId,
             @RequestParam(defaultValue = "false") boolean detailed
     ) {
@@ -53,11 +75,11 @@ public class EventController {
         if(detailed){
             DetailedEventDTO detailedEvent = EventMapper.mapToDetailedEventDTO( event );
 
-            return new ResponseEntity<>(new ApiResponse(detailedEvent,true), HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponseDTO(detailedEvent,true), HttpStatus.OK);
         }
 
         EventSeatsDTO responseDTO = EventMapper.mapToEventSeatsDTO( event );
 
-        return new ResponseEntity<>(new ApiResponse(responseDTO,true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponseDTO(responseDTO,true), HttpStatus.OK);
     }
 }
