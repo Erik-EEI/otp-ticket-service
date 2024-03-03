@@ -8,11 +8,14 @@ import com.otp.partner.dto.response.ApiResponseDTO;
 import com.otp.partner.entity.Reservation;
 import com.otp.partner.mapper.ReservationMapper;
 import com.otp.partner.service.reservation.ReservationService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
+@Tag(name = "Reservation Controller", description = "Controller for handling reservation related operations")
 public class ReservationController {
     private final ReservationService reservationService;
     private final Logger LOGGER = LoggerFactory.getLogger(ReservationController.class);

@@ -9,10 +9,13 @@ import com.otp.partner.entity.Event;
 import com.otp.partner.mapper.EventMapper;
 import com.otp.partner.service.event.EventService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@Tag(name = "Event Controller", description = "Controller for handling event related operations")
 public class EventController {
 
     private final EventService eventService;
@@ -66,7 +70,9 @@ public class EventController {
     })
     @GetMapping("getEvent")
     public ResponseEntity<ApiResponseDTO> getEventById(
+            @Parameter(in = ParameterIn.DEFAULT, required = true, description = "Id of the event to get from module", example = "1")
             @RequestParam(required = true) Long eventId,
+            @Parameter(in = ParameterIn.DEFAULT, required = true, description = "If its value is true, the response will contain every detail of the event, not just the id and seats")
             @RequestParam(defaultValue = "false") boolean detailed
     ) {
         LOGGER.info("GET REQUEST at /getEvent endpoint");
