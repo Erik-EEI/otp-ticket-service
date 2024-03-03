@@ -31,7 +31,6 @@ public class EventService implements EventServiceInterface {
     @Cacheable("all_events")
     public EventListDTO getAllEvents(){
         HttpResponse<String> response = eventDAO.getAllEvents();
-        System.out.println(response.body());
         LOGGER.info("- ⏩ - SENT events request to partner");
         HttpResponseExceptionHandler.checkForException( response );
         LOGGER.info("- ⏪ - RECEIVED events response from partner");
@@ -41,7 +40,6 @@ public class EventService implements EventServiceInterface {
     @Override
     public EventSeatsDTO getEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getEvent(eventData);
-        System.out.println(response.body());
         LOGGER.info(String.format("- ⏩ - SENT event request to partner for event id %s", eventData.eventId()));
         HttpResponseExceptionHandler.checkForException( response );
         LOGGER.info(String.format("- ⏪ - RECEIVED event response from partner for event id %s", eventData.eventId()));
