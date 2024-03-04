@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * Entity class representing an event.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

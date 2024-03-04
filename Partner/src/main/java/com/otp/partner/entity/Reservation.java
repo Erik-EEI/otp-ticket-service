@@ -5,6 +5,9 @@ import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class representing a reservation.
+ */
 @Entity
 @Data
 @Getter
