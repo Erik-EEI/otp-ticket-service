@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for handling event related operations.
+ */
 @RestController
 @RequestMapping("/")
 @Tag(name = "Event Controller", description = "Controller for handling event related operations")
@@ -39,6 +42,10 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    /**
+     * Retrieves all events.
+     * @return ResponseEntity containing the list of events.
+     */
     @Operation(summary = "Get all events")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returned all events",
@@ -59,6 +66,12 @@ public class EventController {
         return new ResponseEntity<>(new ApiResponseDTO(eventDTOS,true), HttpStatus.OK);
     }
 
+    /**
+     * Retrieves a specific event.
+     * @param eventId The ID of the event to retrieve.
+     * @param detailed If true, returns detailed information about the event.
+     * @return ResponseEntity containing the event information.
+     */
     @Operation(summary = "Get a specific event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returned a specific event",
