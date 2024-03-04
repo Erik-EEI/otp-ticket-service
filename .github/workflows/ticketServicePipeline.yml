@@ -7,28 +7,44 @@ on:
     branches: [ "main" ]
 
 jobs:
-  partner:
+  test-partner:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout Partner code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: Partner
-      
-    - name: Build Partner
-      working-directory: Partner
-      run: ./mvnw clean package
 
-  ticket-service:
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+      
+    - name: Build and Test Partner
+      working-directory: Partner
+      run: |
+        ./mvnw clean test
+
+  test-ticket-service:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout TicketService code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: TicketService
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
       
-    - name: Build TicketService
+    - name: Build and Test TicketService
       working-directory: TicketService
-      run: ./mvnw clean package
+      run: |
+        ./mvnw clean test
