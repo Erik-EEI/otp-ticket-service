@@ -18,7 +18,7 @@ jobs:
       
     - name: Build Partner
       working-directory: Partner
-      run: ./mvnw clean install
+      run: ./mvnw clean package
 
   ticket-service:
     runs-on: ubuntu-latest
@@ -31,4 +31,4 @@ jobs:
       
     - name: Build TicketService
       working-directory: TicketService
-      run: ./mvnw clean install
+      run: ./mvnw clean package
