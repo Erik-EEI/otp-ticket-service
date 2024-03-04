@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.net.http.HttpResponse;
 
 /**
- * Szia
+ * Service class for managing payments and reservations.
  */
 @Service
 public class PaymentService implements PaymentServiceInterface {
@@ -36,6 +36,11 @@ public class PaymentService implements PaymentServiceInterface {
         this.reservationService = reservationService;
     }
 
+    /**
+     * Processes a payment for a reservation and makes the reservation.
+     * @param paymentData the payment data including user token, card ID, seat ID, and event data
+     * @return a DTO containing payment response information including reservation ID
+     */
     @Override
     public PaymentResponseDTO payForReservation(PaymentDataDTO paymentData){
         EventDataDTO eventDataDTO = EventMapper.mapToEventDataDTO( paymentData );

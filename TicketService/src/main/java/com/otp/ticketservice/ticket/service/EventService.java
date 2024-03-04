@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
 
+/**
+ * Service class for retrieving events from external API.
+ */
 @Service
 public class EventService implements EventServiceInterface {
 
@@ -27,6 +30,10 @@ public class EventService implements EventServiceInterface {
         this.eventDAO = eventDAO;
     }
 
+    /**
+     * Retrieves all events.
+     * @return a DTO containing a list of events
+     */
     @Override
     @Cacheable("all_events")
     public EventListDTO getAllEvents(){
@@ -37,6 +44,12 @@ public class EventService implements EventServiceInterface {
 
         return EventMapper.mapToEventListDTO( response );
     }
+
+    /**
+     * Retrieves event id with the list of seats at the event.
+     * @param eventData the data of the event to retrieve
+     * @return a DTO containing event id and a list of its seats
+     */
     @Override
     public EventSeatsDTO getEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getEvent(eventData);
@@ -47,6 +60,11 @@ public class EventService implements EventServiceInterface {
         return EventMapper.mapToEventSeatsDTO( response );
     }
 
+    /**
+     * Retrieves detailed event information.
+     * @param eventData the data of the event to retrieve
+     * @return a DTO containing detailed event information
+     */
     @Override
     public DetailedEventDTO getDetailedEvent(EventDataDTO eventData){
         HttpResponse<String> response = eventDAO.getDetailedEvent(eventData);

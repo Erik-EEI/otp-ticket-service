@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for core operations related to user validation, card matching, and payment processing.
+ */
 @Service
 public class CoreService implements CoreServiceInterface {
     private final CardServiceInterface cardService;
