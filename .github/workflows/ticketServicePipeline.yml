@@ -58,6 +58,7 @@ jobs:
           spring.jpa.hibernate.ddl-auto=create
           spring.datasource.driver-class-name=org.postgresql.Driver
           spring.config.import=optional:file:.env[.properties]
+          api.base.url=http://127.0.0.1:8081/
           server.port=8082
           EOF
 
