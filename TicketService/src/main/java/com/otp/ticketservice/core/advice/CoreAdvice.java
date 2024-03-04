@@ -14,9 +14,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Advice class for handling exceptions related to the core module.
+ */
 @RestControllerAdvice
 public class CoreAdvice {
     private final Logger LOGGER = LoggerFactory.getLogger("[CORE MODULE]");
+
+    /**
+     * Handles the CardNotMatchUserException.
+     * @param ex The CardNotMatchUserException instance.
+     * @return ResponseEntity containing the error response.
+     */
     @ExceptionHandler(CardNotMatchUserException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ApiResponse(responseCode = "401", description = "Card does not match to user",
@@ -26,6 +35,12 @@ public class CoreAdvice {
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
+
+    /**
+     * Handles the NotEnoughAmountOnCardException.
+     * @param ex The NotEnoughAmountOnCardException instance.
+     * @return ResponseEntity containing the error response.
+     */
     @ExceptionHandler(NotEnoughAmountOnCardException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ApiResponse(responseCode = "401", description = "Not enough amount on card",
@@ -35,6 +50,12 @@ public class CoreAdvice {
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
+
+    /**
+     * Handles the TokenCanNotBeDecodedException.
+     * @param ex The TokenCanNotBeDecodedException instance.
+     * @return ResponseEntity containing the error response.
+     */
     @ExceptionHandler(TokenCanNotBeDecodedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ApiResponse(responseCode = "401", description = "Token can not be decoded",
@@ -45,6 +66,11 @@ public class CoreAdvice {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * Handles the TokenNotFoundException.
+     * @param ex The TokenNotFoundException instance.
+     * @return ResponseEntity containing the error response.
+     */
     @ExceptionHandler(TokenNotFoundException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ApiResponse(responseCode = "401", description = "Token does not belong to any user",
@@ -54,6 +80,12 @@ public class CoreAdvice {
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
+
+    /**
+     * Handles the CardNotFoundException.
+     * @param ex The CardNotFoundException instance.
+     * @return ResponseEntity containing the error response.
+     */
     @ExceptionHandler(CardNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ApiResponse(responseCode = "404", description = "Token does not belong to any user",
@@ -63,6 +95,12 @@ public class CoreAdvice {
         ApiErrorResponse response = new ApiErrorResponse(ex.getMessage(), ex.getErrorCode(),false);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    /**
+     * Handles the MissingRequestHeaderException.
+     * @param ex The MissingRequestHeaderException instance.
+     * @return ResponseEntity containing the error response.
+     */
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ApiResponse(responseCode = "401", description = "Token not found in request header",
