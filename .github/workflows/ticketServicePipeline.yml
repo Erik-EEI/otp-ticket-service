@@ -24,7 +24,6 @@ jobs:
         cache: maven
       
     - name: Build and Test Partner
-      working-directory: Partner
       run: ./Partner/mvnw clean package
 
   test-ticket-service:
@@ -44,5 +43,4 @@ jobs:
         cache: maven
       
     - name: Build and Test TicketService
-      working-directory: TicketService
       run: ./TicketService/mvnw clean package
