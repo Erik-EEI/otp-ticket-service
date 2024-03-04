@@ -11,6 +11,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Filter for API key-based authentication.
+ */
 @Component
 public class ApiKeyAuthFilter extends OncePerRequestFilter {
     @Value("${api.key}")
@@ -19,6 +22,14 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     private String apiSecret;
     private String apiDocUrl = "/partner-api-docs-ui.html";
 
+    /**
+     * Performs filtering for each incoming request.
+     * @param request The HTTP servlet request.
+     * @param response The HTTP servlet response.
+     * @param filterChain The filter chain for executing subsequent filters.
+     * @throws ServletException If an error occurs during servlet processing.
+     * @throws IOException If an I/O error occurs.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
