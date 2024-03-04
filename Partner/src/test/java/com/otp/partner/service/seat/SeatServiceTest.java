@@ -71,7 +71,7 @@ public class SeatServiceTest {
         when(seatRepository.findById(seatId)).thenReturn(Optional.empty());
 
         assertThrows(SeatNotFoundException.class, () -> seatService.updateSeatReserved(seatId, true));
-        
+
         verify(seatRepository, times(1)).findById(seatId);
         verify(seatRepository, never()).save(any(Seat.class));
     }
