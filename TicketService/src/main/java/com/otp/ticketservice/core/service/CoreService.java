@@ -24,12 +24,22 @@ public class CoreService implements CoreServiceInterface {
         this.tokenService = tokenService;
     }
 
+    /**
+     * Validates a user token.
+     * @param token the token to validate
+     */
     @Override
     public void validateUserToken( String token ){
         tokenService.validate(token);
         LOGGER.info(String.format("✔ - VALID -- Valid token -> %s", token));
     }
 
+    /**
+     * Matches a card to a user using tokenService and cardService with the provided card ID and token.
+     * @param cardId the ID of the card to match
+     * @param token the token associated with the user
+     * @throws CardNotMatchUserException if the card does not match the user associated with the token
+     */
     @Override
     public void matchCardToUser(String cardId, String token ){
         User tokenOwner = tokenService.getUserFromToken( token );
@@ -39,6 +49,11 @@ public class CoreService implements CoreServiceInterface {
         LOGGER.info(String.format("✔ - VALID -- Card %s matched user %s",cardId,cardOwner.getName()));
     }
 
+    /**
+     * Processes a payment using cardService with the specified card ID and amount.
+     * @param cardId the ID of the card to use for payment
+     * @param amount the amount to deduct from the card
+     */
     @Override
     public void payWithCard(String cardId, double amount){
          cardService.processPayment(cardId,amount);
