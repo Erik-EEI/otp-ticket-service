@@ -23,6 +23,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller class for handling reservation-related operations.
+ */
 @RestController
 @RequestMapping("/")
 @Tag(name = "Reservation Controller", description = "Controller for handling reservation related operations")
@@ -34,6 +37,11 @@ public class ReservationController {
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
+    /**
+     * Creates a reservation.
+     * @param reservationData The reservation request data.
+     * @return ResponseEntity containing the reservation response.
+     */
     @Operation(summary = "Make a reservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful reservation",
@@ -56,6 +64,11 @@ public class ReservationController {
         return new ResponseEntity<>(new ApiReservationResponse(reservationId, true), HttpStatus.OK);
     }
 
+    /**
+     * Retrieves a reservation by ID.
+     * @param reservationId The ID of the reservation to retrieve.
+     * @return ResponseEntity containing the reservation information.
+     */
     @Operation(summary = "Retrieve a reservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation data retrieved",
@@ -77,6 +90,11 @@ public class ReservationController {
         return new ResponseEntity<>(new ApiResponseDTO(reservationDTO, true), HttpStatus.OK);
     }
 
+    /**
+     * Cancels a reservation.
+     * @param reservationId The ID of the reservation to cancel.
+     * @return ResponseEntity containing the cancellation response.
+     */
     @Operation(summary = "Cancel a reservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation successfully cancelled",
