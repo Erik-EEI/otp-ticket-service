@@ -24,6 +24,9 @@ public class ReservationService implements ReservationServiceInterface {
     private final EventService eventService;
     private final Logger LOGGER = LoggerFactory.getLogger("[RESERVATION SERVICE]");
 
+    /**
+     * Service class responsible for handling reservation-related operations.
+     */
     @Autowired
     public ReservationService(ReservationRepository reservationRepository, SeatServiceInterface seatService, EventService eventService) {
         this.reservationRepository = reservationRepository;
@@ -31,6 +34,15 @@ public class ReservationService implements ReservationServiceInterface {
         this.seatService = seatService;
     }
 
+    /**
+     * Creates a new reservation for the specified event and seat.
+     *
+     * @param eventId The ID of the event for which the reservation is being made.
+     * @param seatId  The ID of the seat to be reserved.
+     * @return The ID of the created reservation.
+     * @throws SeatNotFoundException        If the specified seat does not exist.
+     * @throws SeatAlreadyReservedException If the specified seat is already reserved.
+     */
     @Override
     public Long createReservation(long eventId, long seatId) {
         Event event = eventService.getEventById(eventId);
@@ -50,6 +62,13 @@ public class ReservationService implements ReservationServiceInterface {
         return savedReservation.getId();
     }
 
+    /**
+     * Retrieves a reservation by its ID.
+     *
+     * @param reservationId The ID of the reservation to retrieve.
+     * @return The reservation with the specified ID.
+     * @throws ReservationNotFoundException If the specified reservation does not exist.
+     */
     @Override
     public Reservation getReservationById(Long reservationId) {
 
@@ -58,6 +77,11 @@ public class ReservationService implements ReservationServiceInterface {
                 .orElseThrow(ReservationNotFoundException::new);
     }
 
+    /**
+     * Cancels a reservation.
+     *
+     * @param reservationId The ID of the reservation to cancel.
+     */
     @Override
     public void cancelReservation(Long reservationId) {
         Reservation reservation = this.getReservationById(reservationId);
