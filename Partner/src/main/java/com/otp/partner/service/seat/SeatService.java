@@ -2,6 +2,7 @@ package com.otp.partner.service.seat;
 
 import com.otp.partner.entity.Seat;
 import com.otp.partner.exception.SeatNotFoundException;
+import com.otp.partner.interfaces.SeatServiceInterface;
 import com.otp.partner.repository.SeatRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class SeatService {
+public class SeatService implements SeatServiceInterface {
 
     private final SeatRepository seatRepository;
     private final Logger LOGGER = LoggerFactory.getLogger("[SEAT SERVICE]");
@@ -20,12 +21,13 @@ public class SeatService {
         this.seatRepository = seatRepository;
     }
 
+    @Override
     public Seat findSeatById(Long seatId) {
         LOGGER.info(String.format("► \uD83D\uDCC2 - Getting Seat with ID %s from database",seatId));
         return seatRepository.findById(seatId)
                 .orElseThrow(SeatNotFoundException::new);
     }
-
+    @Override
     public void updateSeatReserved(Long seatId, boolean reserved) {
         Seat seat = this.findSeatById(seatId);
         seat.setReserved(reserved);

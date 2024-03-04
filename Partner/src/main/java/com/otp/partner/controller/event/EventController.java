@@ -7,6 +7,7 @@ import com.otp.partner.dto.EventDTO;
 import com.otp.partner.dto.EventSeatsDTO;
 import com.otp.partner.entity.Event;
 import com.otp.partner.mapper.EventMapper;
+import com.otp.partner.interfaces.EventServiceInterface;
 import com.otp.partner.service.event.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,7 +31,7 @@ import java.util.List;
 @Tag(name = "Event Controller", description = "Controller for handling event related operations")
 public class EventController {
 
-    private final EventService eventService;
+    private final EventServiceInterface eventService;
     private final Logger LOGGER = LoggerFactory.getLogger("[EVENT CONTROLLER]");
 
     @Autowired

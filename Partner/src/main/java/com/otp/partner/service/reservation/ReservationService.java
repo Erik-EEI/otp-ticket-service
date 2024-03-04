@@ -6,6 +6,8 @@ import com.otp.partner.entity.Seat;
 import com.otp.partner.exception.ReservationNotFoundException;
 import com.otp.partner.exception.SeatAlreadyReservedException;
 import com.otp.partner.exception.SeatNotFoundException;
+import com.otp.partner.interfaces.ReservationServiceInterface;
+import com.otp.partner.interfaces.SeatServiceInterface;
 import com.otp.partner.repository.ReservationRepository;
 import com.otp.partner.service.event.EventService;
 import com.otp.partner.service.seat.SeatService;
@@ -15,20 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReservationService { //TODO Implement interface
+public class ReservationService implements ReservationServiceInterface {
 
     private final ReservationRepository reservationRepository;
-    private final SeatService seatService;
+    private final SeatServiceInterface seatService;
     private final EventService eventService;
     private final Logger LOGGER = LoggerFactory.getLogger("[RESERVATION SERVICE]");
 
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository, SeatService seatService, EventService eventService) {
+    public ReservationService(ReservationRepository reservationRepository, SeatServiceInterface seatService, EventService eventService) {
         this.reservationRepository = reservationRepository;
         this.eventService = eventService;
         this.seatService = seatService;
     }
 
+    @Override
     public Long createReservation(long eventId, long seatId) {
         Event event = eventService.getEventById(eventId);
         Seat seat = seatService.findSeatById(seatId);
@@ -47,6 +50,7 @@ public class ReservationService { //TODO Implement interface
         return savedReservation.getId();
     }
 
+    @Override
     public Reservation getReservationById(Long reservationId) {
 
         LOGGER.info(String.format("► \uD83D\uDCC2 - Getting reservation with ID %s from database",reservationId));
@@ -54,6 +58,7 @@ public class ReservationService { //TODO Implement interface
                 .orElseThrow(ReservationNotFoundException::new);
     }
 
+    @Override
     public void cancelReservation(Long reservationId) {
         Reservation reservation = this.getReservationById(reservationId);
 
