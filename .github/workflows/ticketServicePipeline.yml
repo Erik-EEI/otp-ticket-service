@@ -24,14 +24,15 @@ jobs:
         cache: maven
       
     - name: Build and Test Partner
-      run: ./Partner/mvnw clean package
+      working-directory: Partner
+      run: ./mvnw clean package
 
   test-ticket-service:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout TicketService code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
       with:
         path: TicketService
 
@@ -43,4 +44,5 @@ jobs:
         cache: maven
       
     - name: Build and Test TicketService
-      run: ./TicketService/mvnw clean package
+      working-directory: TicketService
+      run: ./mvnw clean package
