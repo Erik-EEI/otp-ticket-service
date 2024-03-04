@@ -10,6 +10,9 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Data access object (DAO) responsible for interacting with the event-related endpoints of the external API.
+ */
 @Repository
 public class EventDAO {
 
@@ -26,6 +29,12 @@ public class EventDAO {
         return HttpRequestUtil.getRequest(url);
     }
 
+    /**
+     * Retrieves a specific event from the external API based on the provided event data.
+     *
+     * @param eventData The event data specifying the event ID.
+     * @return The HTTP response containing the data for the specified event.
+     */
     public HttpResponse<String> getEvent(EventDataDTO eventData){
         Map<String,String> params = new HashMap<>();
         params.put("eventId",eventData.eventId().toString());
@@ -35,6 +44,12 @@ public class EventDAO {
         return HttpRequestUtil.getRequest(url);
     }
 
+    /**
+     * Retrieves detailed information about a specific event from the external API based on the provided event data.
+     *
+     * @param eventData The event data specifying the event ID.
+     * @return The HTTP response containing the detailed data for the specified event.
+     */
     public HttpResponse<String> getDetailedEvent(EventDataDTO eventData){
         Map<String,String> params = new HashMap<>();
         params.put("eventId",eventData.eventId().toString());

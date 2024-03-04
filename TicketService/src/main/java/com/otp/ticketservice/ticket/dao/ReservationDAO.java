@@ -10,6 +10,9 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Data access object (DAO) responsible for making reservation requests to the external API.
+ */
 @Repository
 public class ReservationDAO {
 
@@ -20,6 +23,12 @@ public class ReservationDAO {
         this.urlBuilder = urlBuilder;
     }
 
+    /**
+     * Sends a reservation request to the external API based on the provided payment data.
+     *
+     * @param paymentData The payment data containing the event ID and seat ID for the reservation.
+     * @return The HTTP response indicating the success or failure of the reservation request.
+     */
     public HttpResponse<String> makeReservation( PaymentDataDTO paymentData ){
         Map<String,String> queryParams = new HashMap<>();
         queryParams.put("eventId", String.valueOf(paymentData.eventId()));
