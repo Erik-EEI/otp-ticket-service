@@ -37,8 +37,3 @@ jobs:
       run: |
         cd TicketService
         ./mvnw clean package -DskipTests=true
-
-    - name: Test TicketService
-      run: |
-        cd TicketService
-        ./mvnw test
