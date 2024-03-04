@@ -1,8 +1,8 @@
 package com.otp.partner.dto;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
+/**
+ * Data Transfer Object (DTO) representing basic event information.
+ */
 public record EventDTO(
         Long eventId,
         String title,

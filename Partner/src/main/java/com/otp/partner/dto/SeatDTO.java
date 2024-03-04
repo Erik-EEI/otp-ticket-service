@@ -1,11 +1,12 @@
 package com.otp.partner.dto;
 
-import jakarta.persistence.Entity;
-
+/**
+ * Data Transfer Object (DTO) representing a seat.
+ */
 public record SeatDTO(
         long id,
         String seatName,
         int price,
         String currency,
         boolean reserved
-) { }
+) {}

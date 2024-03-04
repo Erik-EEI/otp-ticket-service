@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data Transfer Object (DTO) representing a reservation.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
