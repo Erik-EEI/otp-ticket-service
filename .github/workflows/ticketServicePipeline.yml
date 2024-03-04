@@ -1,0 +1,34 @@
+name: Ticket Service Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  partner:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Partner code
+      uses: actions/checkout@v3
+      with:
+        path: Partner
+      
+    - name: Build Partner
+      working-directory: Partner
+      run: ./mvnw clean install
+
+  ticket-service:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout TicketService code
+      uses: actions/checkout@v3
+      with:
+        path: TicketService
+      
+    - name: Build TicketService
+      working-directory: TicketService
+      run: ./mvnw clean install
