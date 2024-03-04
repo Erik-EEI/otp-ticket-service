@@ -10,12 +10,21 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
+/**
+ * Utility class for making HTTP requests.
+ */
 @UtilityClass
 public class HttpRequestUtil {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final HttpClient httpClient = HttpClient.newHttpClient();
 
+    /**
+     * Sends a GET request to the specified target URL with default headers.
+     * @param targetURL the target URL for the GET request
+     * @return the HTTP response received from the server
+     * @throws ExternalSystemNotAvailableException if an error occurs during the request
+     */
     public HttpResponse<String> getRequest(String targetURL) {
         try {
             HttpRequest request = HttpRequest.newBuilder(
@@ -33,6 +42,13 @@ public class HttpRequestUtil {
         }
     }
 
+    /**
+     * Sends a POST request to the specified target URL with default headers and the provided request body.
+     * @param targetURL the target URL for the POST request
+     * @param requestBody the request body to be sent in JSON format
+     * @return the HTTP response received from the server
+     * @throws ExternalSystemNotAvailableException if an error occurs during the request
+     */
     public HttpResponse<String> postRequest(String targetURL, Map<String, String> requestBody) {
         try {
             String requestBodyJson = objectMapper.writeValueAsString(requestBody);
