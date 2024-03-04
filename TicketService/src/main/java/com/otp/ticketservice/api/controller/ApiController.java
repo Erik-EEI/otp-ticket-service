@@ -42,7 +42,7 @@ public class ApiController {
     private final String DEFAULT_USER_TOKEN = "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3";
 
     @Autowired
-    public ApiController(CoreServiceInterface coreService, PaymentService paymentService, EventService eventService) {
+    public ApiController(CoreServiceInterface coreService, PaymentServiceInterface paymentService, EventServiceInterface eventService) {
         this.coreService = coreService;
         this.paymentService = paymentService;
         this.eventService = eventService;

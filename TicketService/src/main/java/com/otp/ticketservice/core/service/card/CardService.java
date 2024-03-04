@@ -5,6 +5,7 @@ import com.otp.ticketservice.core.exception.CardNotFoundException;
 import com.otp.ticketservice.core.exception.NotEnoughAmountOnCardException;
 import com.otp.ticketservice.core.interfaces.CardServiceInterface;
 import com.otp.ticketservice.core.repository.UserBankCardRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class CardService implements CardServiceInterface {
     private final UserBankCardRepository userBankCardRepository;
 
+    @Autowired
     public CardService(UserBankCardRepository userBankCardRepository) {
         this.userBankCardRepository = userBankCardRepository;
     }
