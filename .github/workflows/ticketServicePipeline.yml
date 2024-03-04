@@ -45,6 +45,11 @@ jobs:
         ./mvnw test
 
     - name: Build TicketService
+      env:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/otp-ticket-service
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: admin
+        API_BASE_URL: http://partner-module:8081/
       run: |
         cd TicketService
         ./mvnw clean package -DskipTests=true
