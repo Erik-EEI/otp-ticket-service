@@ -11,6 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Configuration class for security settings.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -18,6 +21,12 @@ public class SecurityConfig {
     @Autowired
     private ApiKeyAuthFilter apiKeyAuthFilter;
 
+    /**
+     * Configures security filter chain.
+     * @param http The HttpSecurity object.
+     * @return The SecurityFilterChain object.
+     * @throws Exception If an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -29,10 +38,5 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .build();
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/partner-api-docs.html");
     }
 }
