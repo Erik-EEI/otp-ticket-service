@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReservationService {
+public class ReservationService { //TODO Implement interface
 
     private final ReservationRepository reservationRepository;
     private final SeatService seatService;
