@@ -1,9 +1,8 @@
 package com.otp.ticketservice.ticket.dto.event_list;
 
-import lombok.Data;
-
-import java.sql.Timestamp;
-
+/**
+ * Data transfer object (DTO) representing an event.
+ */
 public record EventDTO(
         Long eventId,
         String title,

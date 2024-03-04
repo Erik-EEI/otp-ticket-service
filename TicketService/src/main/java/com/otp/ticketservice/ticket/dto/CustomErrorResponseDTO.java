@@ -1,8 +1,8 @@
 package com.otp.ticketservice.ticket.dto;
 
-import lombok.Data;
-
-
+/**
+ * Data transfer object (DTO) representing a custom error response.
+ */
 public record CustomErrorResponseDTO (
         String message,
         int errorCode,
