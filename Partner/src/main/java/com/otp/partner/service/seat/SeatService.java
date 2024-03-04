@@ -8,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service class for managing seats.
+ */
 @Service
 public class SeatService implements SeatServiceInterface {
 
@@ -21,12 +23,25 @@ public class SeatService implements SeatServiceInterface {
         this.seatRepository = seatRepository;
     }
 
+    /**
+     * Finds a seat by its ID.
+     * @param seatId the ID of the seat to find
+     * @return the seat with the specified ID
+     * @throws SeatNotFoundException if the seat with the specified ID is not found
+     */
     @Override
     public Seat findSeatById(Long seatId) {
         LOGGER.info(String.format("► \uD83D\uDCC2 - Getting Seat with ID %s from database",seatId));
         return seatRepository.findById(seatId)
                 .orElseThrow(SeatNotFoundException::new);
     }
+
+    /**
+     * Updates the reservation status of a seat.
+     * @param seatId the ID of the seat to update
+     * @param reserved the new reservation status
+     * @throws SeatNotFoundException if the seat with the specified ID is not found
+     */
     @Override
     public void updateSeatReserved(Long seatId, boolean reserved) {
         Seat seat = this.findSeatById(seatId);
