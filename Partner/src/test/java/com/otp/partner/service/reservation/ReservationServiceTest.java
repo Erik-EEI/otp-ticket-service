@@ -10,7 +10,6 @@ import com.otp.partner.service.event.EventService;
 import com.otp.partner.service.seat.SeatService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
