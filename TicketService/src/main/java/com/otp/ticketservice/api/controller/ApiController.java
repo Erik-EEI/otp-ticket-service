@@ -27,6 +27,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for handling requests from clients.
+ */
 @RestController
 @RequestMapping("/")
 @Tag(name = "API Controller", description = "Controller for handling requests from clients")
@@ -45,6 +48,11 @@ public class ApiController {
         this.eventService = eventService;
     }
 
+    /**
+     * Retrieves all events.
+     * @param userToken User token for authentication.
+     * @return ResponseEntity containing the list of events.
+     */
     @Operation(summary = "Get all events")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returned all events",
@@ -68,6 +76,12 @@ public class ApiController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    /**
+     * Retrieves a specific event by ID.
+     * @param eventId ID of the required event.
+     * @param userToken User token for authentication.
+     * @return ResponseEntity containing the event details.
+     */
     @Operation(summary = "Get a specific event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returned a specific event",
@@ -97,6 +111,12 @@ public class ApiController {
         return new ResponseEntity<>(eventWithSeats, HttpStatus.OK);
     }
 
+    /**
+     * Makes a reservation for an event.
+     * @param paymentRequest Data required for reserving a seat at an event.
+     * @param userToken User token for authentication.
+     * @return ResponseEntity containing the payment response.
+     */
     @Operation(summary = "Make a reservation for an event")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Reservation successful",
