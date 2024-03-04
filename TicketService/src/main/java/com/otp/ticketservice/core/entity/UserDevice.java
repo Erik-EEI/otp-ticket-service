@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a device entity associated with a user.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
