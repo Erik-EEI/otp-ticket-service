@@ -8,6 +8,10 @@ COPY .mvn .mvn
 RUN ./mvnw dependency:resolve
 
 COPY src src
+
+RUN apt-get update && apt-get install -y dos2unix
+RUN dos2unix ./mvnw
+
 RUN ./mvnw clean package -DskipTests=true
 
 # Second stage: Create the final image
