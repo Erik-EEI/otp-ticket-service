@@ -2,7 +2,6 @@ package com.otp.ticketservice.ticket.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.otp.ticketservice.ticket.dto.CustomErrorResponseDTO;
-import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.exceptions.UnexpectedResponseFromPartnerException;
 import lombok.experimental.UtilityClass;
 

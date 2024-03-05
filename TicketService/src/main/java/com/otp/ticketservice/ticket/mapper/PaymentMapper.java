@@ -1,8 +1,6 @@
 package com.otp.ticketservice.ticket.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.otp.ticketservice.ticket.dto.event_list.EventListDTO;
-import com.otp.ticketservice.ticket.dto.payment.PaymentRequestDTO;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import lombok.experimental.UtilityClass;
 

@@ -8,6 +8,7 @@ import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
 import com.otp.ticketservice.ticket.dto.single_event_with_seats.SeatDTO;
 import com.otp.ticketservice.ticket.interfaces.EventServiceInterface;
 import com.otp.ticketservice.ticket.interfaces.PaymentServiceInterface;
+import com.otp.ticketservice.ticket.interfaces.ReservationServiceInterface;
 import com.otp.ticketservice.ticket.mapper.EventMapper;
 import com.otp.ticketservice.ticket.mapper.PaymentMapper;
 import com.otp.ticketservice.ticket.utils.SeatHandler;
@@ -26,11 +27,11 @@ import java.net.http.HttpResponse;
 public class PaymentService implements PaymentServiceInterface {
     private final CoreServiceInterface coreService;
     private final EventServiceInterface eventService;
-    private final ReservationService reservationService;
+    private final ReservationServiceInterface reservationService;
     private final Logger LOGGER = LoggerFactory.getLogger("[TICKET - PAYMENT SERVICE]");
 
     @Autowired
-    public PaymentService(CoreServiceInterface coreService, EventServiceInterface eventService, ReservationService reservationService) {
+    public PaymentService(CoreServiceInterface coreService, EventServiceInterface eventService, ReservationServiceInterface reservationService) {
         this.coreService = coreService;
         this.eventService = eventService;
         this.reservationService = reservationService;
