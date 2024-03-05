@@ -6,6 +6,7 @@ Welcome to the Ticket Service Application repository! Here you'll find all the i
 - [Module Documentation](docs/moduleDocumentations/ModuleDocumentationMain.md)
 - [System Documentation](docs/systemDocumentations/SystemDocumentationMain.md)
 - [API Reference](docs/APIReference.md)
+- [CI/CD Pipeline](docs%2FCICDPipeline.md)
 
 ## Installation Guide
 
@@ -31,4 +32,10 @@ Learn about the operations behind the use cases.
 Explore the API endpoints and functionalities provided by both modules.
 
 [Read API Reference](docs/APIReference.md)
+
+## CI/CD Pipeline
+
+Overview of the CI/CD Pipeline logic. 
+
+[Read CI/CD Pipeline](docs%2FCICDPipeline.md)
 
