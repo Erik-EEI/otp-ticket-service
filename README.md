@@ -29,7 +29,7 @@ Learn about the operations behind the use cases.
 
 ## API Reference
 
-Explore the API endpoints and functionalities provided by both modules.
+Explore and exercise the API endpoints and functionalities provided by both modules.
 
 [Read API Reference](docs/APIReference.md)
 

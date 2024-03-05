@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "eea35121-368e-4311-9f61-2a847010ae2f",
+		"name": "Ticket Service Module",
+		"description": "Contains requests to test the Ticket System module explicitly.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33255309"
+	},
+	"item": [
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get all events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "userToken",
+								"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Localhost}}/getEvents",
+							"host": [
+								"{{Localhost}}"
+							],
+							"path": [
+								"getEvents"
+							]
+						},
+						"description": "This endpoint sends an HTTP GET request to retrieve a list of events."
+					},
+					"response": []
+				},
+				{
+					"name": "Get a specific event",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "userToken",
+								"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Localhost}}/getEvent?eventId=1",
+							"host": [
+								"{{Localhost}}"
+							],
+							"path": [
+								"getEvent"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1"
+								}
+							]
+						},
+						"description": "This endpoint makes an HTTP GET request to retrieve event details based on the provided eventId."
+					},
+					"response": []
+				}
+			],
+			"description": "Contains event related operation requests."
+		},
+		{
+			"name": "Exceptions",
+			"item": [
+				{
+					"name": "Core Module",
+					"item": [
+						{
+							"name": "Invalid Token - 10053",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{Localhost}}/getEvents",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"getEvents"
+									]
+								},
+								"description": "This endpoint makes an HTTP GET request to retrieve events from the server. The included user token is invalid.\n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						},
+						{
+							"name": "Non-existent token - 10050",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE1",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{Localhost}}/getEvents",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"getEvents"
+									]
+								},
+								"description": "This endpoint makes an HTTP GET request to retrieve events from the server.There is no token included in the request, making authentication failure.\n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						},
+						{
+							"name": "Card does not match user - 10100",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eventId\": 1,\r\n    \"seatId\": 2,\r\n    \"cardId\": \"C002\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Localhost}}/pay",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"pay"
+									],
+									"query": [
+										{
+											"key": "eventId",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "seatId",
+											"value": "2",
+											"disabled": true
+										}
+									]
+								},
+								"description": "This endpoint allows you to make a POST request to {{Localhost}}/pay in order to process a payment. The request should include a payload with the raw request body type containing the \"eventId\", \"seatId\", and \"cardId\" parameters.\n\nThe provided card id is related to a different user from the token's owner.\n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						},
+						{
+							"name": "Insufficient amount on card - 10101",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eventId\": 2,\r\n    \"seatId\": 15,\r\n    \"cardId\": \"C001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Localhost}}/pay",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"pay"
+									],
+									"query": [
+										{
+											"key": "eventId",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "seatId",
+											"value": "2",
+											"disabled": true
+										}
+									]
+								},
+								"description": "This endpoint allows you to make a POST request to {{Localhost}}/pay in order to process a payment. The request should include a payload with the raw request body type containing the \"eventId\", \"seatId\", and \"cardId\" parameters.\n\nThe event seat costs more than the available amount on the user's card.\n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						}
+					],
+					"description": "Test the core module's custom exceptions"
+				},
+				{
+					"name": "Ticket Module",
+					"item": [
+						{
+							"name": "Non existent Event ID - 20001",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{Localhost}}/getEvent?eventId=5",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"getEvent"
+									],
+									"query": [
+										{
+											"key": "eventId",
+											"value": "5"
+										}
+									]
+								},
+								"description": "This endpoint makes an HTTP GET request to retrieve the details of a specific event by providing the event ID as a query parameter.\n\nThe provided event ID does not exist in the system.\n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						},
+						{
+							"name": "Non existent SeatID - 20002",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eventId\": 1,\r\n    \"seatId\": 28,\r\n    \"cardId\": \"C001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Localhost}}/pay",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"pay"
+									]
+								},
+								"description": "### Pay\n\nThis endpoint is used to process a payment.\n\nThe provided seat ID points to a non existent seat.  \n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						},
+						{
+							"name": "Seat already occupied - 20010",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eventId\": 1,\r\n    \"seatId\": 1,\r\n    \"cardId\": \"C001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Localhost}}/pay",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"pay"
+									]
+								},
+								"description": "This endpoint allows you to make a POST request to {{Localhost}}/pay in order to process a payment. The request should include a JSON payload with the keys \"eventId\", \"seatId\", and \"cardId\".\n\nThe provided seat ID points to a seat that is already reserved.\n\nIts purpose is to test if the correct custom error message and format is returned."
+							},
+							"response": []
+						},
+						{
+							"name": "Event is in the past - 20011",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "userToken",
+										"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eventId\": 1,\r\n    \"seatId\": 2,\r\n    \"cardId\": \"C001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Localhost}}/pay",
+									"host": [
+										"{{Localhost}}"
+									],
+									"path": [
+										"pay"
+									]
+								},
+								"description": "This API endpoint is used to make a payment for a reservation.\n\nIf the required event started before the time of the request, the reservation will fail.  \n\nIts purpose is to test if the correct custom error message and format is returned.\n\nPLEASE NOTE: This validation is turned off for the development perios."
+							},
+							"response": []
+						}
+					],
+					"description": "Test the ticket module's custom exceptions"
+				}
+			],
+			"description": "Contains requests to test custom exceptions"
+		},
+		{
+			"name": "Reservation",
+			"item": [
+				{
+					"name": "Pay for reservation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "userToken",
+								"value": "dGVzenQuYWxhZGFyQG90cG1vYmlsLmNvbSYxMDAwJkY2N0MyQkNCRkNGQTMwRkNDQjM2RjcyRENBMjJBODE3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eventId\": 1,\r\n    \"seatId\": 2,\r\n    \"cardId\": \"C001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Localhost}}/pay",
+							"host": [
+								"{{Localhost}}"
+							],
+							"path": [
+								"pay"
+							],
+							"query": [
+								{
+									"key": "eventId",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "seatId",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This API endpoint allows you to make a POST request to {{Localhost}}/pay in order to process a payment. The request should include the payload with the raw request body type, containing the \"eventId\", \"seatId\", and \"cardId\" parameters."
+					},
+					"response": []
+				}
+			],
+			"description": "Make a reservation through Ticket Service module."
+		}
+	],
+	"variable": [
+		{
+			"key": "Localhost",
+			"value": "http://127.0.0.1:8082"
+		}
+	]
+}
