@@ -30,7 +30,7 @@ This document provides an overview of the libraries used and the logic implement
 - **Repository Layer**: Utilizes Spring Data JPA repositories to interact with the database and perform CRUD operations on entities.
 - **Service Layer**: Contains business logic for managing reservations, users, and other functionalities related to the ticket service.
 - **Controller Layer**: Defines RESTful API endpoints for handling operations with client..
-- **Security Configuration**: Configures Spring Security to protect endpoints and authenticate users accessing the ticket service.
+- **Security Configuration**: Provided by custom user-token authentication method from the CORE module.
 
 ### Database
 > Considering its reliability, advanced features, and compatibility, ***PostgreSQL*** is a suitable choice for powering the ticket service module that demand scalability, and flexibility in data management.
