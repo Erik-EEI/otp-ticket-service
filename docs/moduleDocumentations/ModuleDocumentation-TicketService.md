@@ -1,6 +1,6 @@
 # Module Documentation - Ticket Service
 This document provides an overview of the libraries used and the logic implemented in the Ticket Service Module and the Partner Module.
-
+>**IMPORTANT NOTICE:** For testing purposes, the timestamp validation logic of the Ticket module is turned off, because all of the provided events are in the past, hence only that custom exception is thrown for the reservation requests!<br> **CONFIGURATION:** You can turn the timestamp validation ON / OFF in the `application.properties` file by setting the `api.timestamp.validation=` field to either *true* or *false*!
 ### Libraries Used
 > #### Core Framework
 - **Spring Boot (v3.2.3)**: A comprehensive framework for building production-ready Spring-based applications with minimal configuration.
