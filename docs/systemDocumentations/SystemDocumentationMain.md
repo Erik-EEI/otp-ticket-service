@@ -1,6 +1,6 @@
 # Main System Documentation
 
-This document serves as the parent document providing an overview and navigation to the system documentation for different functionalities.
+Welcome to the parent document of the system documentation for different functionalities.
 
 ## Table of Contents
 

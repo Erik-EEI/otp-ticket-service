@@ -13,7 +13,7 @@ This document provides an overview of the libraries used and the logic implement
 - **Project Lombok**: Reduces boilerplate code in Java classes with annotations.
 - **Spring Boot Starter Cache (v3.1.5)**: Facilitates caching support within the application.
 
-> #### Testing
+> #### Testing / Static code analyzing
 - **JUnit**: A popular testing framework for Java applications.
 - **JaCoCo Maven Plugin (v0.8.11)**: Generates code coverage reports for the application.
 

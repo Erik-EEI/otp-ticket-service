@@ -11,7 +11,7 @@ Welcome to the Ticket Service Application repository! Here you'll find all the i
 ## Installation Guide
 
 This guide will walk you through the steps required to install and set up the application on your system. <br>
-You can either **build the project** and run it locally, or use **docker compose** to take care of it for you.
+You can either **build the project** and run it locally, or use **docker compose** to handle it for you.
 
 [Read Installation Guide](docs/InstallationGuide.md)
 

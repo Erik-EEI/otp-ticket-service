@@ -1,6 +1,6 @@
 # Installation Guide
 
-Follow these steps to install and set up MyProject on your system.
+Follow these steps to install and set up the Ticket Service Application on your system.
 
 ## Prerequisites
 

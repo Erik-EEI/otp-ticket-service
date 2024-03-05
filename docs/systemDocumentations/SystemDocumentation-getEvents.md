@@ -1,6 +1,6 @@
 # System Documentation
 
-This document provides an overview of the underlying operations behind the use cases of the system.
+This document provides an overview of the underlying operations behind the event list retrieval usecase.
 
 ## Get all events ( /getEvents )
 > ### In case of Cached value

@@ -1,8 +1,8 @@
 # System Documentation
 
-This document provides an overview of the underlying operations behind the use cases of the system.
+This document provides an overview of the underlying operations behind the event information retrieval usecase.
 
-## Get a specific event ( /getEvents )
+## Get a specific event ( /getEvent )
 
 > - [TICKET - SERVICE] - After receiving a GET request to the API endpoint the service class validates the User Token
 > - [TICKET - SERVICE] - The ticket service sends a HTTP GET Request to the Partner module's `/getEvent` endpoint.

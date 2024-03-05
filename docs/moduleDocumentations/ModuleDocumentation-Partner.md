@@ -21,8 +21,9 @@ This document provides an overview of the libraries used and the logic implement
 - **Logback Classic**: A flexible and customizable logging framework for the application.
 - **Springdoc OpenAPI Starter Web MVC UI**: Generates interactive API documentation using OpenAPI specifications.
 
-> #### Testing
+> #### Testing / Static code analyzing
 - **JUnit**: A popular testing framework for Java applications.
+- **JaCoCo Maven Plugin (v0.8.11)**: Generates code coverage reports for the application.
 
 
 ### Application Logic
@@ -45,4 +46,4 @@ This document provides an overview of the libraries used and the logic implement
 - Get a specific reservation
 - Cancel a reservation
   
-![UML - UseCase - Partner module.png](..%2Fuml%2FUseCase%2FUML%20-%20UseCase%20-%20Partner%20module.png)![UML - UseCase - Partner module.png](uml%2FUseCase%2FUML%20-%20UseCase%20-%20Partner%20module.png)
+![UML - UseCase - Partner module.png](..%2Fuml%2FUseCase%2FUML%20-%20UseCase%20-%20Partner%20module.png)

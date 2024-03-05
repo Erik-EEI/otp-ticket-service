@@ -2,7 +2,7 @@
 
 ## OpenAPI / Swagger UI Documentation
 
-This document provides instructions on how to access the OpenAPI and Swagger UI documentation for the various modules in both modules.
+This section provides instructions on how to access the OpenAPI and Swagger UI documentation for the various modules in both modules.
 
 ### Ticket Service Module
 
@@ -11,7 +11,7 @@ To access the OpenAPI / Swagger UI documentation for the Ticket Service Module, 
 1. Ensure that the Ticket Service Module is running on your local machine.
 2. Open your web browser and navigate to the following URL:
    ```
-   http://localhost:8081/ticket-api-docs-ui.html
+   http://localhost:8082/ticket-api-docs-ui.html
    ```
 3. You should now see the Swagger UI interface displaying the documentation for the Ticket Service API.
 
@@ -22,7 +22,7 @@ To access the OpenAPI / Swagger UI documentation for the Partner Module, follow 
 1. Ensure that the Partner Module is running on your local machine.
 2. Open your web browser and navigate to the following URL:
    ```
-   http://localhost:8082/partner-api-docs-ui.html
+   http://localhost:8081/partner-api-docs-ui.html
    ```
 3. You should now see the Swagger UI interface displaying the documentation for the Partner Module API.
 
@@ -45,7 +45,7 @@ To access the OpenAPI / Swagger UI documentation for the Partner Module, follow 
 To exercise the endpoint via Postman, follow these steps:
 
 1. **Download and Install Postman:** If you don't have postman desktop agent, download and install Postman from [here](https://www.postman.com/downloads/).
-
+   ( If you are using the website, you do not have to do steps 2 )
 2. **Import Postman Collections:**
    - Download the provided Postman collections for the Ticket Service Module and the Partner Module.
    - Open Postman and import these collections. To import, click on the "Import" button in the top left corner of the Postman window, select the downloaded JSON files, and then click "Open".

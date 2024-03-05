@@ -1,6 +1,6 @@
 # System Documentation
 
-This document provides an overview of the underlying operations behind the use cases of the system.
+This document provides an overview of the underlying operations behind the reservation making and payment processing usecase.
 
 ## Pay and make a reservation ( /pay )
 
