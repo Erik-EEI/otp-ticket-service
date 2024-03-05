@@ -46,21 +46,21 @@ jobs:
 
     - name: Configure the application.properties file in Ticket Service
       run: |
-          cd TicketService
-          cat >./src/main/resources/application.properties <<EOF
-          spring.datasource.url=jdbc:postgresql://localhost:5432/otp-ticket-service
-          spring.datasource.username=postgres
-          spring.datasource.password=admin
-          spring.jpa.hibernate.ddl-auto=create
-          spring.sql.init.mode=always
-          spring.sql.init.schema-locations=classpath:init.sql
-          spring.jpa.defer-datasource-initialization=true
-          spring.jpa.hibernate.ddl-auto=create
-          spring.datasource.driver-class-name=org.postgresql.Driver
-          spring.config.import=optional:file:.env[.properties]
-          api.base.url=http://127.0.0.1:8081/
-          server.port=8082
-          EOF
+        cd TicketService
+        cat >./src/main/resources/application.properties <<EOF
+        spring.datasource.url=jdbc:postgresql://localhost:5432/otp-ticket-service
+        spring.datasource.username=postgres
+        spring.datasource.password=admin
+        spring.jpa.hibernate.ddl-auto=create
+        spring.sql.init.mode=always
+        spring.sql.init.schema-locations=classpath:init.sql
+        spring.jpa.defer-datasource-initialization=true
+        spring.jpa.hibernate.ddl-auto=create
+        spring.datasource.driver-class-name=org.postgresql.Driver
+        spring.config.import=optional:file:.env[.properties]
+        api.base.url=http://127.0.0.1:8081/
+        server.port=8082
+        EOF
 
     - name: Build TicketService
       run: |
@@ -71,3 +71,28 @@ jobs:
       run: |
         cd TicketService
         ./mvnw test
+
+  build-and-push-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image from Partner directory
+      run: |
+        cd Partner
+        docker build -t erikeei97/ticket-service:partner-module .
+        docker push erikeei97/ticket-service:partner-module
+
+    - name: Build and push Docker image from TicketService directory
+      run: |
+        cd TicketService
+        docker build -t erikeei97/ticket-service:ticket-module .
+        docker push erikeei97/ticket-service:ticket-module
