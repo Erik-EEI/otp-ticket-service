@@ -72,22 +72,27 @@ jobs:
         cd TicketService
         ./mvnw test
 
-  build-docker-image:
+  build-and-push-docker:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+    - name: Build and push Docker image from Partner directory
+      run: |
+        cd Partner
+        docker build -t erikeei97/ticket-service-partner .
+        docker push erikeei97/ticket-service-partner
 
-      - name: Build and push Docker Compose images
-        run: |
-          docker-compose build
-          docker-compose push
+    - name: Build and push Docker image from TicketService directory
+      run: |
+        cd TicketService
+        docker build -t erikeei97/ticket-service .
+        docker push erikeei97/ticket-service
