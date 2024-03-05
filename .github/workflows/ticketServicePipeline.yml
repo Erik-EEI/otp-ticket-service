@@ -88,11 +88,11 @@ jobs:
     - name: Build and push Docker image from Partner directory
       run: |
         cd Partner
-        docker build -t erikeei97/ticket-service .
+        docker build -t erikeei97/ticket-service:partner-module .
         docker push erikeei97/ticket-service:partner-module
 
     - name: Build and push Docker image from TicketService directory
       run: |
         cd TicketService
-        docker build -t erikeei97/ticket-service .
+        docker build -t erikeei97/ticket-service:ticket-module .
         docker push erikeei97/ticket-service:ticket-module
