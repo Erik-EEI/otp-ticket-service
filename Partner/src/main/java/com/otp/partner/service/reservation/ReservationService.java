@@ -6,6 +6,7 @@ import com.otp.partner.entity.Seat;
 import com.otp.partner.exception.ReservationNotFoundException;
 import com.otp.partner.exception.SeatAlreadyReservedException;
 import com.otp.partner.exception.SeatNotFoundException;
+import com.otp.partner.interfaces.EventServiceInterface;
 import com.otp.partner.interfaces.ReservationServiceInterface;
 import com.otp.partner.interfaces.SeatServiceInterface;
 import com.otp.partner.repository.ReservationRepository;
@@ -21,14 +22,14 @@ public class ReservationService implements ReservationServiceInterface {
 
     private final ReservationRepository reservationRepository;
     private final SeatServiceInterface seatService;
-    private final EventService eventService;
+    private final EventServiceInterface eventService;
     private final Logger LOGGER = LoggerFactory.getLogger("[RESERVATION SERVICE]");
 
     /**
      * Service class responsible for handling reservation-related operations.
      */
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository, SeatServiceInterface seatService, EventService eventService) {
+    public ReservationService(ReservationRepository reservationRepository, SeatServiceInterface seatService, EventServiceInterface eventService) {
         this.reservationRepository = reservationRepository;
         this.eventService = eventService;
         this.seatService = seatService;
