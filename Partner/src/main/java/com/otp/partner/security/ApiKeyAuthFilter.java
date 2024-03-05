@@ -20,7 +20,6 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     private String apiKey;
     @Value("${api.secret}")
     private String apiSecret;
-    private String apiDocUrl = "/partner-api-docs-ui.html";
 
     /**
      * Performs filtering for each incoming request.
@@ -38,7 +37,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
         String requestApiSecret = request.getHeader("X-API-SECRET");
         String requestUri = request.getRequestURI();
 
-        if (apiDocUrl.equals(requestUri) || requestUri.contains("partner") || requestUri.contains("swagger")) { //TODO Implement route exceptions into the filterchain
+        if (requestUri.contains("partner") || requestUri.contains("swagger")) { //TODO Implement route exceptions into the filterchain
             filterChain.doFilter(request, response);
             return;
         }
