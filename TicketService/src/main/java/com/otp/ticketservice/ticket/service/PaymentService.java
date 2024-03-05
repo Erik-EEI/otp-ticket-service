@@ -16,6 +16,7 @@ import com.otp.ticketservice.ticket.utils.TimestampHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpResponse;
@@ -29,6 +30,9 @@ public class PaymentService implements PaymentServiceInterface {
     private final EventServiceInterface eventService;
     private final ReservationServiceInterface reservationService;
     private final Logger LOGGER = LoggerFactory.getLogger("[TICKET - PAYMENT SERVICE]");
+
+    @Value("${api.timestamp.validation}")
+    private boolean validateTimeStamp;
 
     @Autowired
     public PaymentService(CoreServiceInterface coreService, EventServiceInterface eventService, ReservationServiceInterface reservationService) {
@@ -48,7 +52,9 @@ public class PaymentService implements PaymentServiceInterface {
         DetailedEventDTO detailedEvent = eventService.getDetailedEvent(eventDataDTO);
         SeatDTO seat = SeatHandler.getSeat(detailedEvent.seats(), paymentData.seatId());
 
+        if(validateTimeStamp){
         TimestampHandler.checkStartTime(detailedEvent.startTimeStamp());
+        }
         SeatHandler.validateIfSeatIsReservable(seat);
         coreService.matchCardToUser(paymentData.cardID(), paymentData.userToken());
         coreService.payWithCard(paymentData.cardID(), seat.price());

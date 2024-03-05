@@ -29,7 +29,7 @@ public class TimestampHandler {
         LocalDateTime eventDate = LocalDateTime.parse(dateString,formatter);
         LocalDateTime currentDate = LocalDateTime.now();
 
-        // if(currentDate.isAfter(eventDate)) throw new CanNotReserveSeatForEventInPastException(); //FIXME - SWITCHED OFF
+        if(currentDate.isAfter(eventDate)) throw new CanNotReserveSeatForEventInPastException();
         LOGGER.info("✔ - VALID -- Event is not started in the past");
     }
 }
