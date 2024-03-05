@@ -56,7 +56,10 @@ public class EventController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))})
     })
     @GetMapping("getEvents")
-    public ResponseEntity<ApiResponseDTO> getEvents() {
+    public ResponseEntity<ApiResponseDTO> getEvents(
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Key", example = "partner-key", schema = @Schema(type = "string")) @RequestHeader("x-api-key") String apiKey,
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Secret", example = "partner-secret", schema = @Schema(type = "string")) @RequestHeader("x-api-secret") String apiSecret
+    ) {
         LOGGER.info(" » GET REQUEST at /getEvents endpoint");
         List<Event> events = eventService.getAllEvents();
 
@@ -85,6 +88,8 @@ public class EventController {
     })
     @GetMapping("getEvent")
     public ResponseEntity<ApiResponseDTO> getEventById(
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Key", example = "partner-key", schema = @Schema(type = "string")) @RequestHeader("x-api-key") String apiKey,
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Secret", example = "partner-secret", schema = @Schema(type = "string")) @RequestHeader("x-api-secret") String apiSecret,
             @Parameter(in = ParameterIn.DEFAULT, required = true, description = "Id of the event to get from module", example = "1")
             @RequestParam(required = true) Long eventId,
             @Parameter(in = ParameterIn.DEFAULT, required = true, description = "If its value is true, the response will contain every detail of the event, not just the id and seats")

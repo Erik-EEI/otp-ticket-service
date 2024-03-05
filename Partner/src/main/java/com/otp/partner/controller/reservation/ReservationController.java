@@ -10,6 +10,8 @@ import com.otp.partner.mapper.ReservationMapper;
 import com.otp.partner.service.reservation.ReservationService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,7 +56,11 @@ public class ReservationController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))})
     })
     @PostMapping("/reserve")
-    public ResponseEntity<ApiReservationResponse> createReservation(@RequestBody ReservationRequestDTO reservationData) {
+    public ResponseEntity<ApiReservationResponse> createReservation(
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Key", example = "partner-key", schema = @Schema(type = "string")) @RequestHeader("x-api-key") String apiKey,
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Secret", example = "partner-secret", schema = @Schema(type = "string")) @RequestHeader("x-api-secret") String apiSecret,
+            @RequestBody ReservationRequestDTO reservationData
+    ) {
         LOGGER.info(String.format(" » POST REQUEST at /reserve endpoint | EventId: %s , SeatId: %s", reservationData.eventId(),reservationData.seatId()));
         Long eventId = reservationData.eventId();
         Long seatId = reservationData.seatId();
@@ -81,7 +87,11 @@ public class ReservationController {
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponseDTO.class))})
     })
     @GetMapping("/reservation")
-    public ResponseEntity<ApiResponseDTO> getReservationById(@RequestParam Long reservationId) {
+    public ResponseEntity<ApiResponseDTO> getReservationById(
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Key", example = "partner-key", schema = @Schema(type = "string")) @RequestHeader("x-api-key") String apiKey,
+            @Parameter(in = ParameterIn.HEADER, required = true, description = "API Secret", example = "partner-secret", schema = @Schema(type = "string")) @RequestHeader("x-api-secret") String apiSecret,
+            @RequestParam Long reservationId
+    ) {
         LOGGER.info(String.format(" » GET REQUEST at /reserve endpoint | reservation ID: %s",reservationId));
         Reservation reservation = reservationService.getReservationById(reservationId);
         ReservationDTO reservationDTO = ReservationMapper.mapToReservationDTO( reservation );
