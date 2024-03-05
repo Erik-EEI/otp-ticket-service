@@ -2,6 +2,7 @@ package com.otp.ticketservice.ticket.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.otp.ticketservice.ticket.dto.payment.PaymentResponseDTO;
+import com.otp.ticketservice.ticket.exceptions.UnexpectedResponseFromPartnerException;
 import lombok.experimental.UtilityClass;
 
 import java.net.http.HttpResponse;
@@ -14,7 +15,7 @@ public class PaymentMapper {
         try{
             return objectMapper.readValue(response.body(), PaymentResponseDTO.class);
         } catch (Exception e){
-            throw new RuntimeException("Error parsing Partner response"); //TODO Handle custom exception
+            throw new UnexpectedResponseFromPartnerException();
         }
     }
 }
